@@ -20,7 +20,7 @@ export const POST = async (req: NextRequest): Promise<NextResponse> => {
       model: "gpt-4o", //사용 모델
       messages: [
         {
-          role: "system", // 시스템에게 content의 역할을 지시
+          role: "system", // 시스템에게 역할을 지시
           content: systemPrompt,
         },
         {
@@ -30,9 +30,7 @@ export const POST = async (req: NextRequest): Promise<NextResponse> => {
       ],
     });
 
-    console.log(res.choices[0].message.content); //ai가 생성하는 여러 답변 중 첫번째를 채택
-
-    return NextResponse.json(res.choices[0].message.content);
+    return NextResponse.json(res.choices[0].message.content); //ai가 생성하는 여러 답변 중 첫번째를 채택
   } catch (error) {
     console.log("open ai에러 발생=>", error);
     return NextResponse.json(

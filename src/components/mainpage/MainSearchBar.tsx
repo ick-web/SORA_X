@@ -21,17 +21,8 @@ const MainSearchBar = () => {
     setIsLoading(true);
     setAnswer("");
 
-    const handlerUrl = process.env.HANDLER_URL;
-
-    if (!handlerUrl) {
-      console.error("HANDLER_URL is not defined");
-      setAnswer("서버 URL이 정의되지 않았습니다.");
-      setIsLoading(false);
-      return;
-    }
-
     try {
-      const res = await fetch(handlerUrl, {
+      const res = await fetch("http://localhost:3000/api/openai", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ question }),
