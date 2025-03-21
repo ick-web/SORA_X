@@ -1,6 +1,12 @@
 import AuthForm from "@/components/Form";
 import React from "react";
 
-const LoginPage = () => <AuthForm mode="login" />;
+const LoginPage = () => {
+return(
+<div className="flex flex-row justify-center items-center bg-black">
+  <AuthForm mode="login" />;
+</div>
+)
+}
 
 export default LoginPage;
