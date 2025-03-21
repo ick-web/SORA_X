@@ -1,3 +1,5 @@
+"use client";
+
 import MainDescCard from "@/components/mainpage/MainDescCard";
 import MainSearchBar from "@/components/mainpage/MainSearchBar";
 import MainTitle from "@/components/mainpage/MainTitle";
