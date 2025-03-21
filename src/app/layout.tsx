@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import Header from "../components/Header";
-import { Atkinson_Hyperlegible, Noto_Sans_KR } from "next/font/google";
+import { Open_Sans, Noto_Sans_KR } from "next/font/google";
 // import Footer from "../components/Footer";
 
 // 영문 폰트
-const atkinsonMono = Atkinson_Hyperlegible({
+const openSans = Open_Sans({
   weight: ["400"],
   subsets: ["latin"],
   variable: "--font-atkinson",
@@ -33,7 +33,7 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body
-        className={`${atkinsonMono.className} ${notoSansKR.className} antialiased flex`}
+        className={`${openSans.className} ${notoSansKR.className} antialiased flex`}
       >
         <Header />
         {children}
