@@ -14,7 +14,7 @@ const Header = () => {
           <Image src="/soraX-logo.png" alt="Logo" width={32} height={32} />
           <h1 className="text-3xl font-bold">Sora X</h1>
         </div>
-        <nav className="container w-full h-full mx-auto flex flex-col justify-start space-y-4">
+        <nav className="container w-full h-full mx-auto flex flex-col justify-start space-y-6">
           <Link
             href="/"
             className="border border-neutral-500 rounded-full bg-neutral-900 w-56 h-10 flex justify-start items-center gap-2 pl-4 text-sm text-neutral-300 mb-3"
@@ -22,18 +22,17 @@ const Header = () => {
             <CiCirclePlus className="text-xl text-neutral-300" />새 질문
           </Link>
           <Link
+            href="/"
+            className="flex justify-start items-center text-center text-md font-medium text-neutral-200 gap-2"
+          >
+            <AiFillHome className="text-2xl" />홈
+          </Link>
+          <Link
             href="/community"
             className="flex justify-start items-center text-center text-md font-medium text-neutral-200 gap-2"
           >
-            <AiFillHome className="text-2xl" />
-            만남의 광장?
-          </Link>
-          <Link
-            href="/ranking"
-            className="flex justify-start items-center text-center text-md font-medium text-neutral-200 gap-2"
-          >
             <FaBookmark className="text-2xl" />
-            랭킹 보기
+            질문의 광장
           </Link>
           <Link
             href="/mypage"
@@ -43,7 +42,7 @@ const Header = () => {
             마이페이지
           </Link>
           <Link
-            href="/login"
+            href="/ranking"
             className="flex justify-start items-center text-center text-md font-medium text-neutral-200 gap-2"
           >
             <HiMiniTrophy className="text-2xl" />
