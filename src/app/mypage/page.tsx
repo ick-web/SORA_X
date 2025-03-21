@@ -1,7 +1,13 @@
+import Mycard from "@/components/(mypage)/Mycard";
+
 const MyPage = () => {
   return (
     <div>
-      <div>myquestions</div>
+      <div>
+        <Mycard />
+        <Mycard />
+        <Mycard />
+      </div>
     </div>
   );
 };

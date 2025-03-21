@@ -1,7 +1,13 @@
-import React from "react";
+import Mycard from "@/components/(mypage)/Mycard";
 
 const mycomments = () => {
-  return <div>mycomments</div>;
+  return (
+    <div>
+      <Mycard />
+      <Mycard />
+      <Mycard />
+    </div>
+  );
 };
 
 export default mycomments;
