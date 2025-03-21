@@ -1,6 +1,7 @@
 import CommentInput from "./CommentInput";
 
 const CommentList = () => {
+  // 임시 댓글 데이터
   const comments = [
     { id: 1, user: "유저1", text: "유치원 안 나오셨나요 hoxy?" },
     { id: 2, user: "유저2", text: "1+1은 도의적으로 2입니다..." },
@@ -15,9 +16,7 @@ const CommentList = () => {
           className="border-2 border-orange-500 rounded-lg p-4 mb-4"
         >
           <div className="border-b border-gray-700 pb-2 mb-2">
-            <span className="font-bold">
-              {comment.user}
-            </span>
+            <span className="font-bold">{comment.user}</span>
           </div>
           <p>{comment.text}</p>
         </div>
