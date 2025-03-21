@@ -13,5 +13,6 @@ export const fetchAnswerById = async (answerId: string) => {
     return data;
   } catch (error) {
     console.error(error);
+    return;
   }
 };
