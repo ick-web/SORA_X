@@ -1,6 +1,7 @@
+import { answerPropsType } from "@/types/mainTypes";
 import React from "react";
 
-const MainAnswer = ({ isLoading, answer }) => {
+const MainAnswer = ({ isLoading, answer }: answerPropsType) => {
   return (
     <div>
       {isLoading && (

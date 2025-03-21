@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useState, ChangeEvent, FormEvent } from "react";
+import MainAnswer from "./MainAnswer";
 
 const MainSearchBar = () => {
   const [question, setQuestion] = useState<string>("");
@@ -75,17 +76,7 @@ const MainSearchBar = () => {
         </div>
       </form>
 
-      {isLoading && (
-        <div className="w-full max-w-2xl mt-2 p-4 bg-[#2a2a2a] rounded-lg text-white">
-          답변을 생성하는 중...
-        </div>
-      )}
-
-      {!isLoading && answer && (
-        <div className="w-full max-w-2xl mt-2 p-4 bg-[#2a2a2a] rounded-lg text-white whitespace-pre-line">
-          {answer}
-        </div>
-      )}
+      <MainAnswer isLoading={isLoading} answer={answer} />
     </div>
   );
 };
