@@ -1,6 +1,6 @@
 import React from "react";
-import QuestionDetail from "@/components/detail/QuestionDetail";
-import CommentList from "@/components/detail/comments/CommentList";
+import QuestionDetail from "@/components/(detail)/QuestionDetail";
+import CommentList from "@/components/(detail)/comments/CommentList";
 
 const EditPage = () => {
   return (

@@ -1,26 +1,35 @@
+import { fetchCommentById } from "@/utils/fetchCommentById";
 import CommentInput from "./CommentInput";
+import { Comment } from "@/types/comment";
 
-const CommentList = () => {
+const CommentList = async () => {
   // 임시 댓글 데이터
-  const comments = [
-    { id: 1, user: "유저1", text: "유치원 안 나오셨나요 hoxy?" },
-    { id: 2, user: "유저2", text: "1+1은 도의적으로 2입니다..." },
-  ];
+  // const comments = [
+  //   { id: 1, user: "유저1", text: "유치원 안 나오셨나요 hoxy?" },
+  //   { id: 2, user: "유저2", text: "1+1은 도의적으로 2입니다..." },
+  // ];
+  const answerId = "bafb482a-b5f6-43ea-af90-254941ecb660"; // 임시로 answer_id 넣음
+  const comments: Comment[] = await fetchCommentById(answerId);
 
   return (
     <div>
       <h2 className="text-2xl mb-4">COMMENT</h2>
-      {comments.map((comment) => (
-        <div
-          key={comment.id}
-          className="border-2 border-orange-500 rounded-lg p-4 mb-4"
-        >
-          <div className="border-b border-gray-700 pb-2 mb-2">
-            <span className="font-bold">{comment.user}</span>
+      {comments.length > 0 ? (
+        comments.map((comment) => (
+          <div
+            key={comment.comment_id}
+            className="border-2 border-orange-500 rounded-lg p-4 mb-4"
+          >
+            <span className="font-bold">{comment.users.user_nickname}</span>
+            <span className="ml-2 text-gray-400 text-sm">
+              {new Date(comment.comment_created_at).toLocaleString()}
+            </span>
+            <p className="mt-2">{comment.comment_content}</p>
           </div>
-          <p>{comment.text}</p>
-        </div>
-      ))}
+        ))
+      ) : (
+        <p className="text-gray-500">아직 댓글이 없습니다.</p>
+      )}
       <CommentInput />
     </div>
   );
