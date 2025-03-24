@@ -17,13 +17,13 @@ const Header = () => {
         <nav className="container w-full h-full mx-auto flex flex-col justify-start space-y-6">
           <Link
             href="/"
-            className="border border-neutral-500 rounded-full bg-neutral-900 w-56 h-10 flex justify-start items-center gap-2 pl-4 text-sm text-neutral-300 mb-3"
+            className="border border-neutral-500 rounded-full bg-neutral-900 w-56 h-10 flex justify-start items-center gap-2 pl-4 text-sm text-neutral-300 mb-3 transition-all duration-300 hover:bg-neutral-700"
           >
             <CiCirclePlus className="text-xl text-neutral-300" />새 질문
           </Link>
           <Link
             href="/"
-            className="flex justify-start items-center text-center text-md font-medium text-neutral-200 gap-2"
+            className="flex justify-start items-center text-center text-md font-medium text-neutral-200 gap-2 transition-all duration-300 hover:text-orange-600"
           >
             <AiFillHome className="text-2xl" />홈
           </Link>
