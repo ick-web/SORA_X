@@ -9,7 +9,7 @@ export type Comment = {
   };
 };
 
-export type addComment = Pick<
+export type newComment = Pick<
   Comment,
   "comment_user_id" | "comment_id" | "comment_answer_id"
 >;
