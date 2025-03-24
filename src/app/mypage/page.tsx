@@ -35,7 +35,7 @@ const MyPage = async () => {
 
   return (
     <div>
-      <hr className="border-t border-gray-400 my-6" />
+      <div className="border-t border-gray-400 my-6" />
       <div className="flex flex-col  ">
         {a?.map((aa) => {
           return <Myanswercard {...aa} key={aa.answer_id} />;
