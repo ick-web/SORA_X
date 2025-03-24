@@ -17,14 +17,37 @@ const MainSearchBar = () => {
 
   useEffect(() => {
     const checkUser = async () => {
+      const session = supabase.auth.getSession(); // 현재 세션 정보 가져오기
+
+      if (!session) {
+        alert("로그인 세션이 없습니다.");
+
+        return;
+      }
+
       const { data, error } = await supabase.auth.getUser();
-      if (!error && data?.user) {
+      if (error) {
+        alert("사용자 정보를 가져오는 중 에러가 발생했습니다.");
+      } else {
         setUser(data.user);
       }
     };
 
     checkUser();
   }, []);
+
+  // useEffect(() => {
+  //   const checkUser = async () => {
+  //     const { data, error } = await supabase.auth.getUser();
+  //     if (error && !data?.user) {
+  //       alert("error");
+  //     } else {
+  //       setUser(data.user);
+  //     }
+  //   };
+
+  //   checkUser();
+  // }, []);
 
   const handleQuestionChange = (e: ChangeEvent<HTMLInputElement>) => {
     setQuestion(e.target.value);
