@@ -1,5 +1,5 @@
 import supabase from "@/app/supabase/client";
-import { Comment } from "@/types/comment";
+import { Comment } from "@/types/commentTypes";
 
 export const fetchCommentById = async (
   answerId: string

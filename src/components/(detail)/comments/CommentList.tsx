@@ -1,13 +1,8 @@
 import { fetchCommentById } from "@/utils/fetchCommentById";
 import CommentInput from "./CommentInput";
-import { Comment } from "@/types/comment";
+import { Comment } from "@/types/commentTypes";
 
 const CommentList = async () => {
-  // 임시 댓글 데이터
-  // const comments = [
-  //   { id: 1, user: "유저1", text: "유치원 안 나오셨나요 hoxy?" },
-  //   { id: 2, user: "유저2", text: "1+1은 도의적으로 2입니다..." },
-  // ];
   const answerId = "bafb482a-b5f6-43ea-af90-254941ecb660"; // 임시로 answer_id 넣음
   const comments: Comment[] = await fetchCommentById(answerId);
 
