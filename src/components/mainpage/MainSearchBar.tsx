@@ -1,17 +1,34 @@
 "use client";
 //리팩토링 필요
 import Image from "next/image";
-import { useState, ChangeEvent, FormEvent, useRef } from "react";
+import { useState, ChangeEvent, FormEvent, useRef, useEffect } from "react";
 import MainAnswer from "./MainAnswer";
 import MainImagePreview from "./MainPagePreview";
+import supabase from "@/app/supabase/client";
+import { User } from "@supabase/supabase-js";
 
 const MainSearchBar = () => {
   const [question, setQuestion] = useState<string>("");
   const [answer, setAnswer] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [imageBase64, setImageBase64] = useState<string>("");
+  const [user, setUser] = useState<User | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string>("");
+
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const checkUser = async () => {
+      const { data, error } = await supabase.auth.getUser();
+      if (error || !data?.user) {
+        alert("error");
+      } else {
+        setUser(data.user);
+      }
+    };
+
+    checkUser();
+  }, []);
 
   const handleQuestionChange = (e: ChangeEvent<HTMLInputElement>) => {
     setQuestion(e.target.value);
@@ -84,6 +101,9 @@ const MainSearchBar = () => {
     } finally {
       setIsLoading(false);
     }
+
+    console.log(imageBase64);
+    console.log(previewUrl);
   };
 
   return (
