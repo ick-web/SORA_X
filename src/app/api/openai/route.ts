@@ -1,3 +1,5 @@
+//pr생성용 주석추가
+
 import { RequestData } from "@/types/mainTypes";
 import { NextRequest, NextResponse } from "next/server";
 import OpenAI from "openai";

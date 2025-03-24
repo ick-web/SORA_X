@@ -1,5 +1,6 @@
 import Image from "next/image";
 import React from "react";
+//pr생성용 주석추가
 
 const MainImagePreview = ({
   previewUrl,

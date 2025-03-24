@@ -1,3 +1,4 @@
+//pr생성용 주석추가
 export interface answerPropsType {
   isLoading: boolean;
   answer: string;

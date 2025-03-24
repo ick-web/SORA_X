@@ -1,9 +1,9 @@
 "use client";
-//리팩토링 필요
+//리팩토링 필요, + pr생성용 주석추가
 import Image from "next/image";
 import { useState, ChangeEvent, FormEvent, useRef, useEffect } from "react";
 import MainAnswer from "./MainAnswer";
-import MainImagePreview from "./MainPagePreview";
+import MainImagePreview from "./MainImagePreview";
 import supabase from "@/app/supabase/client";
 import { User } from "@supabase/supabase-js";
 
