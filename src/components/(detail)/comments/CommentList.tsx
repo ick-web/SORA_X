@@ -1,4 +1,4 @@
-import { fetchCommentById } from "@/utils/fetchCommentById";
+import { fetchCommentById } from "@/utils/detail/fetchCommentById";
 import CommentInput from "./CommentInput";
 import { Comment } from "@/types/commentTypes";
 

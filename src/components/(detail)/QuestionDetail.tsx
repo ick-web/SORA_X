@@ -1,4 +1,4 @@
-import { fetchAnswerById } from "@/utils/fetchAnswerById";
+import { fetchAnswerById } from "@/utils/detail/fetchAnswerById";
 import Image from "next/image";
 
 const QuestionDetail = async () => {
