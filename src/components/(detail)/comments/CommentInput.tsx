@@ -14,13 +14,13 @@ const CommentInput = () => {
   return (
     <div className="mt-4 flex items-center">
       <input
-        className="w-full p-2 bg-gray-700 rounded text-white"
+        className="w-full p-2 bg-color-black2 rounded text-white"
         placeholder="댓글을 입력하세요..."
         value={comment}
         onChange={(e) => setComment(e.target.value)}
       />
       <button
-        className="w-20 ml-2 px-4 py-2 bg-orange-500 rounded"
+        className="w-20 ml-2 px-4 py-2 bg-color-orange1 rounded"
         onClick={handleAddComment}
       >
         등록

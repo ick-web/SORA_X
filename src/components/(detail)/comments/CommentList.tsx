@@ -13,17 +13,17 @@ const CommentList = async () => {
         comments.map((comment) => (
           <div
             key={comment.comment_id}
-            className="border-2 border-orange-500 rounded-lg p-4 mb-4"
+            className="border-2 border-color-orange2 rounded-lg p-4 mb-4"
           >
             <span className="font-bold">{comment.users.user_nickname}</span>
-            <span className="ml-2 text-gray-400 text-sm">
+            <span className="ml-2 text-color-black3 text-sm">
               {new Date(comment.comment_created_at).toLocaleString()}
             </span>
             <p className="mt-2">{comment.comment_content}</p>
           </div>
         ))
       ) : (
-        <p className="text-gray-500">아직 댓글이 없습니다.</p>
+        <p className="text-color-black2">아직 댓글이 없습니다.</p>
       )}
       <CommentInput />
     </div>

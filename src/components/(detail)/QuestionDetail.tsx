@@ -8,9 +8,9 @@ const QuestionDetail = async () => {
   if (!data) return <p>데이터를 불러오지 못했습니다.</p>;
 
   return (
-    <div className="p-4 mb-10 border-b border-gray-700">
+    <div className="p-4 mb-10 border-b border-color-black3">
       <h2 className="text-2xl font-bold mb-4">질문</h2>
-      <div className="bg-gray-700 mb-6 rounded p-2">
+      <div className="bg-color-black2 mb-6 rounded p-2">
         {data.answer_image ? (
           <Image
             src={data.answer_image}
@@ -24,7 +24,7 @@ const QuestionDetail = async () => {
         )}
       </div>
       <h2 className="text-2xl font-bold mb-4">풀이</h2>
-      <p className="bg-gray-700 mb-6 rounded p-2">{data.answer_answer}</p>
+      <p className="bg-color-black2 mb-6 rounded p-2">{data.answer_answer}</p>
     </div>
   );
 };
