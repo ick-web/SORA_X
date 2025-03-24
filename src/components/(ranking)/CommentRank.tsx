@@ -1,4 +1,4 @@
-import { RANKING_COUNT } from "@/constants/ranking/rank";
+import { RANKING_COUNT, RANKING_TOP3 } from "@/constants/ranking/rank";
 import { CommentUsersResponse } from "@/utils/ranking/server-action";
 import React from "react";
 
@@ -13,7 +13,7 @@ const CommentRank = ({ commentUsers }: { commentUsers: CommentUsersResponse[] | 
           <li key={count} className="flex flex-row gap-8 w-full">
             <p
               className={`w-16 text-right text-2xl mr-16 ${
-                [1, 2, 3].includes(count) ? "text-color-orange1" : "text-white"
+                RANKING_TOP3.includes(count) ? "text-color-orange1" : "text-white"
               }`}
             >
               {commentCount[i] ? `${count} 등` : ""}
