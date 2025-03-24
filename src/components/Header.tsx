@@ -9,15 +9,21 @@ import { HiMiniTrophy } from "react-icons/hi2";
 const Header = () => {
   return (
     <div className="w-80 h-screen p-3">
-      <header className="w-full h-full bg-neutral-800 text-white p-8 rounded-3xl">
-        <div className="flex justify-start items-center gap-2 mb-8">
-          <Image src="/soraX-logo.png" alt="Logo" width={32} height={32} />
+      <header className="w-full h-full bg-color-black1 text-white p-8 rounded-3xl">
+        <div className="flex justify-start items-center text-center gap-2 mb-8">
+          <Image
+            src="/soraX-logo.png"
+            alt="Logo"
+            width={32}
+            height={32}
+            className="mt-1"
+          />
           <h1 className="text-3xl font-bold">Sora X</h1>
         </div>
         <nav className="container w-full h-full mx-auto flex flex-col justify-start space-y-6">
           <Link
             href="/"
-            className="border border-neutral-500 rounded-full bg-neutral-900 w-56 h-10 flex justify-start items-center gap-2 pl-4 text-sm text-neutral-300 mb-3 transition-all duration-300 hover:bg-neutral-700"
+            className="border border-color-black3 rounded-full bg-neutral-900 w-56 h-10 flex justify-start items-center gap-2 pl-4 text-sm text-neutral-300 mb-2 transition-all duration-300 hover:bg-color-black3"
           >
             <CiCirclePlus className="text-xl text-neutral-300" />새 질문
           </Link>
