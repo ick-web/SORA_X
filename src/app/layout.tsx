@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
 import "./globals.css";
 import Header from "../components/Header";
 import { Open_Sans, Noto_Sans_KR } from "next/font/google";

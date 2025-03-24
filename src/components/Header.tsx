@@ -23,27 +23,27 @@ const Header = () => {
           </Link>
           <Link
             href="/"
-            className="flex justify-start items-center text-center text-md font-medium text-neutral-200 gap-2 transition-all duration-300 hover:text-orange-600"
+            className="flex justify-start items-center text-center text-md font-medium text-neutral-200 gap-2 transition-all duration-300 hover:text-color-orange2"
           >
             <AiFillHome className="text-2xl" />홈
           </Link>
           <Link
             href="/community"
-            className="flex justify-start items-center text-center text-md font-medium text-neutral-200 gap-2"
+            className="flex justify-start items-center text-center text-md font-medium text-neutral-200 gap-2 transition-all duration-300 hover:text-color-orange2"
           >
             <FaBookmark className="text-2xl" />
             질문의 광장
           </Link>
           <Link
             href="/mypage"
-            className="flex justify-start items-center text-center text-md font-medium text-neutral-200 gap-2"
+            className="flex justify-start items-center text-center text-md font-medium text-neutral-200 gap-2 transition-all duration-300 hover:text-color-orange2"
           >
             <RiInbox2Fill className="text-2xl" />
             마이페이지
           </Link>
           <Link
             href="/ranking"
-            className="flex justify-start items-center text-center text-md font-medium text-neutral-200 gap-2"
+            className="flex justify-start items-center text-center text-md font-medium text-neutral-200 gap-2 transition-all duration-300 hover:text-color-orange2"
           >
             <HiMiniTrophy className="text-2xl" />
             학습 랭크
