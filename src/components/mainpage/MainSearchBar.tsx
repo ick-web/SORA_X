@@ -1,31 +1,79 @@
 "use client";
-
+//리팩토링 필요
 import Image from "next/image";
-import { useState, ChangeEvent, FormEvent } from "react";
+import { useState, ChangeEvent, FormEvent, useRef } from "react";
 import MainAnswer from "./MainAnswer";
+import MainImagePreview from "./MainPagePreview";
 
 const MainSearchBar = () => {
   const [question, setQuestion] = useState<string>("");
   const [answer, setAnswer] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [imageBase64, setImageBase64] = useState<string>("");
+  const [previewUrl, setPreviewUrl] = useState<string>("");
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleQuestionChange = (e: ChangeEvent<HTMLInputElement>) => {
     setQuestion(e.target.value);
   };
 
+  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (file.size > 5 * 1024 * 1024) {
+      alert("5MB 이하의 이미지만 업로드 가능합니다.");
+      return;
+    }
+
+    if (!file.type.startsWith("image/")) {
+      alert("이미지 파일만 업로드 가능합니다.");
+      return;
+    }
+
+    const objectUrl = URL.createObjectURL(file);
+    setPreviewUrl(objectUrl);
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      const base64 = reader.result as string;
+      setImageBase64(base64);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleUploadButtonClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
+  const handleRemoveImage = () => {
+    setImageBase64("");
+    setPreviewUrl("");
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!question.trim()) return;
+    if (!question.trim() && !imageBase64) return;
 
     setIsLoading(true);
     setAnswer("");
 
+    const handlerUrl = "/api/openai";
+
     try {
-      const res = await fetch("http://localhost:3000/api/openai", {
+      const res = await fetch(handlerUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ question }),
+        body: JSON.stringify({
+          question,
+          image_url: imageBase64,
+        }),
       });
 
       const data = await res.json();
@@ -50,7 +98,11 @@ const MainSearchBar = () => {
             className="w-full bg-transparent text-white text-lg font-['Gothic_A1'] focus:outline-none"
           />
           <div className="flex items-center gap-4">
-            <button type="button" className="flex-shrink-0">
+            <button
+              type="button"
+              onClick={handleUploadButtonClick}
+              className="flex-shrink-0"
+            >
               <Image
                 className="w-7 h-7"
                 src="https://cdn-icons-png.flaticon.com/512/3459/3459593.png"
@@ -62,21 +114,35 @@ const MainSearchBar = () => {
             <button
               type="submit"
               className="flex-shrink-0"
-              disabled={isLoading || !question.trim()}
+              disabled={isLoading || (!question.trim() && !imageBase64)}
             >
               <Image
                 className={`w-7 h-7 ${isLoading ? "opacity-50" : ""}`}
                 src="https://cdn-icons-png.flaticon.com/512/7109/7109313.png"
-                alt="검색 이미지 "
+                alt="검색 이미지"
                 width={28}
                 height={28}
               />
             </button>
           </div>
         </div>
+
+        <MainImagePreview
+          previewUrl={previewUrl}
+          handleRemoveImage={handleRemoveImage}
+        />
       </form>
 
-      <MainAnswer isLoading={isLoading} answer={answer} />
+      <MainAnswer isLoading={isLoading} answer={answer} question={question} />
+
+      {/*파일 업로드하는 창*/}
+      <input
+        ref={fileInputRef}
+        type="file"
+        className="hidden"
+        accept="image/*"
+        onChange={handleImageChange}
+      />
     </div>
   );
 };
