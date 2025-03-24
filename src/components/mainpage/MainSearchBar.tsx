@@ -1,5 +1,5 @@
 "use client";
-//리팩토링 필요, + pr생성용 주석추가
+//리팩토링 필요 -> 코드가 너무 길고 복잡해서 읽기가 싫어짐
 import Image from "next/image";
 import { useState, ChangeEvent, FormEvent, useRef, useEffect } from "react";
 import MainAnswer from "./MainAnswer";
@@ -11,18 +11,14 @@ const MainSearchBar = () => {
   const [question, setQuestion] = useState<string>("");
   const [answer, setAnswer] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [imageBase64, setImageBase64] = useState<string>("");
-  const [user, setUser] = useState<User | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string>("");
-
+  const [user, setUser] = useState<User | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const checkUser = async () => {
       const { data, error } = await supabase.auth.getUser();
-      if (error || !data?.user) {
-        alert("error");
-      } else {
+      if (!error && data?.user) {
         setUser(data.user);
       }
     };
@@ -50,60 +46,80 @@ const MainSearchBar = () => {
 
     const objectUrl = URL.createObjectURL(file);
     setPreviewUrl(objectUrl);
-
-    const reader = new FileReader();
-    reader.onload = () => {
-      const base64 = reader.result as string;
-      setImageBase64(base64);
-    };
-    reader.readAsDataURL(file);
   };
 
   const handleUploadButtonClick = () => {
-    if (fileInputRef.current) {
-      fileInputRef.current.click();
-    }
+    fileInputRef.current?.click();
   };
 
   const handleRemoveImage = () => {
-    setImageBase64("");
     setPreviewUrl("");
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
   };
 
+  const uploadImageToSupabase = async (file: File): Promise<string | null> => {
+    const fileName = `${Date.now()}-${file.name}`;
+    const { error } = await supabase.storage
+      .from("sorax-img")
+      .upload(fileName, file);
+
+    if (error) {
+      console.error("이미지 업로드 실패:", error);
+      return null;
+    }
+
+    const { data: urlData } = supabase.storage
+      .from("sorax-img")
+      .getPublicUrl(fileName);
+    return urlData.publicUrl;
+  };
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    if (!question.trim() && !imageBase64) return;
+    if (!question.trim() && !previewUrl) return;
 
     setIsLoading(true);
     setAnswer("");
 
-    const handlerUrl = "/api/openai";
+    let imageUrl: string | null = null;
+
+    if (fileInputRef.current?.files?.[0]) {
+      imageUrl = await uploadImageToSupabase(fileInputRef.current.files[0]);
+      if (!imageUrl) {
+        alert("이미지 업로드 실패");
+        setIsLoading(false);
+        return;
+      }
+    }
 
     try {
-      const res = await fetch(handlerUrl, {
+      const res = await fetch("/api/openai", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          question,
-          image_url: imageBase64,
-        }),
+        body: JSON.stringify({ question, image_url: imageUrl }),
       });
 
       const data = await res.json();
       setAnswer(data);
+
+      const { error } = await supabase.from("answers").insert({
+        answer_user_id: user?.id || "",
+        answer_text: question,
+        answer_image: imageUrl,
+        answer_answer: data,
+      });
+
+      if (error) {
+        console.error("데이터 저장 실패:", error);
+      }
     } catch (error) {
       console.error("오류 발생:", error);
       setAnswer("죄송합니다. 답변을 생성하는 중 오류가 발생했습니다.");
     } finally {
       setIsLoading(false);
     }
-
-    console.log(imageBase64);
-    console.log(previewUrl);
   };
 
   return (
@@ -134,7 +150,7 @@ const MainSearchBar = () => {
             <button
               type="submit"
               className="flex-shrink-0"
-              disabled={isLoading || (!question.trim() && !imageBase64)}
+              disabled={isLoading || (!question.trim() && !previewUrl)}
             >
               <Image
                 className={`w-7 h-7 ${isLoading ? "opacity-50" : ""}`}
@@ -155,7 +171,6 @@ const MainSearchBar = () => {
 
       <MainAnswer isLoading={isLoading} answer={answer} question={question} />
 
-      {/*파일 업로드하는 창*/}
       <input
         ref={fileInputRef}
         type="file"
