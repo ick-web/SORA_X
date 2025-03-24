@@ -53,8 +53,6 @@ export const POST = async (req: NextRequest): Promise<NextResponse> => {
       messages: messages,
     });
 
-    console.log(res.choices[0].message.content);
-
     return NextResponse.json(res.choices[0].message.content);
   } catch (error) {
     console.log("open ai에러 발생=>", error);
