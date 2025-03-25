@@ -22,7 +22,9 @@ const MainSearchBar = () => {
 
   useEffect(() => {
     const checkUser = async () => {
+
       const session = supabase.auth.getSession();
+
 
       if (!session) {
         alert("로그인 세션이 없습니다.");
@@ -55,6 +57,19 @@ const MainSearchBar = () => {
 
     checkUser();
   }, [answer]);
+
+  // useEffect(() => {
+  //   const checkUser = async () => {
+  //     const { data, error } = await supabase.auth.getUser();
+  //     if (error && !data?.user) {
+  //       alert("error");
+  //     } else {
+  //       setUser(data.user);
+  //     }
+  //   };
+
+  //   checkUser();
+  // }, []);
 
   const handleQuestionChange = (e: ChangeEvent<HTMLInputElement>) => {
     setQuestion(e.target.value);
