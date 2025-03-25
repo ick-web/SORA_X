@@ -16,9 +16,8 @@ const MyPage = () => {
   if (isError) return <p>오류 발생</p>;
 
   return (
-    <div className="h-100%">
-      <div className="border-t border-color-black3 my-6 " />
-      <div className="flex flex-col  ">
+    <div>
+      <div className="flex flex-col flex-1 overflow-y-auto">
         {data?.map((post) => {
           return <Myanswercard {...post} key={post.answer_id} />;
         })}
