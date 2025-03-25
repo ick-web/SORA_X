@@ -12,6 +12,14 @@ export type Answer = {
   answer_image?: string;
   answer_text: string;
   answer_answer: string;
+  user: User;
+};
+
+export type User = {
+  user_id: string;
+  user_created_at: string;
+  user_nickname: string;
+  user_email: string;
 };
 
 export type MessageContent =
