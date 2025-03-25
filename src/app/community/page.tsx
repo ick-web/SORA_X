@@ -28,7 +28,7 @@ const CommunityPage = async () => {
         </div>
 
         {/* 질문리스트 */}
-        <div className="w-full max-h-[600px] overflow-y-auto space-y-6 ">
+        <div className="w-full max-h-[600px] overflow-y-auto space-y-6">
           {answers?.map((item: Answer) => (
             <div
               key={item.answer_id}
