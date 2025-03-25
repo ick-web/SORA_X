@@ -14,6 +14,11 @@ const MainSearchBar = () => {
   const [previewUrl, setPreviewUrl] = useState<string>("");
   const [user, setUser] = useState<User | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [latestUserAnswer, setLatestUserAnswer] = useState<{
+    answer_text: string;
+    answer_answer: string;
+    answer_image: string | null;
+  } | null>(null);
 
   useEffect(() => {
     const checkUser = async () => {
@@ -33,9 +38,23 @@ const MainSearchBar = () => {
       }
     };
 
+    const fetchLatestAnswer = async () => {
+      const data = await getAnswerFromSupabase();
+      if (data) {
+        setLatestUserAnswer({
+          answer_text: data.answer_text,
+          answer_answer: data.answer_answer,
+          answer_image: data.answer_image,
+        });
+      }
+    };
+
+    if (user) {
+      fetchLatestAnswer();
+    }
+
     checkUser();
-    getAnswerFromSupabase();
-  }, []);
+  }, [answer]);
 
   const handleQuestionChange = (e: ChangeEvent<HTMLInputElement>) => {
     setQuestion(e.target.value);
@@ -68,6 +87,11 @@ const MainSearchBar = () => {
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
+  };
+
+  const resetForm = () => {
+    setQuestion("");
+    setPreviewUrl("");
   };
 
   const uploadImageToSupabase = async (file: File): Promise<string | null> => {
@@ -128,7 +152,7 @@ const MainSearchBar = () => {
 
       const data = await res.json();
       setAnswer(data);
-
+      resetForm();
       const { error } = await supabase.from("answers").insert({
         answer_user_id: user?.id || "",
         answer_text: question,
@@ -142,18 +166,37 @@ const MainSearchBar = () => {
     } catch (error) {
       console.error("오류 발생:", error);
       setAnswer("죄송합니다. 답변을 생성하는 중 오류가 발생했습니다.");
+      resetForm();
     } finally {
       setIsLoading(false);
     }
   };
 
   const getAnswerFromSupabase = async () => {
-    const { data, error } = await supabase
-      .from("answers")
-      .select("*")
-      .eq("answer_user_id", user);
-    if (error) throw error;
-    console.log(data[0]);
+    if (!user) {
+      console.error("사용자 정보가 없습니다.");
+      return null;
+    }
+
+    try {
+      const { data, error } = await supabase
+        .from("answers")
+        .select("*")
+        .eq("answer_user_id", user.id)
+        .order("answer_created_at", { ascending: false })
+        .limit(1)
+        .single();
+
+      if (error) {
+        console.error("최신 답변 가져오기 실패:", error);
+        return null;
+      }
+
+      return data;
+    } catch (error) {
+      console.error("최신 답변 조회 중 오류 발생:", error);
+      return null;
+    }
   };
 
   return (
@@ -203,7 +246,12 @@ const MainSearchBar = () => {
         />
       </form>
 
-      <MainAnswer isLoading={isLoading} answer={answer} question={question} />
+      <MainAnswer
+        isLoading={isLoading}
+        answer={answer || latestUserAnswer?.answer_answer || ""}
+        question={question || latestUserAnswer?.answer_text || ""}
+        imageUrl={latestUserAnswer?.answer_image || undefined}
+      />
 
       <input
         ref={fileInputRef}
