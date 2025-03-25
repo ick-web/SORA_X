@@ -1,24 +1,33 @@
 "use client";
-//리팩토링 필요 -> 코드가 너무 길고 복잡해서 읽기가 싫어짐
 import Image from "next/image";
 import { useState, ChangeEvent, FormEvent, useRef, useEffect } from "react";
-import MainAnswer from "./MainAnswer";
+
 import MainImagePreview from "./MainImagePreview";
+import MainFileUploader from "./MainFileUploader";
+
 import supabase from "@/app/supabase/client";
 import { User } from "@supabase/supabase-js";
+import {
+  uploadImageToSupabase,
+  getAnswerFromSupabase,
+  validateImage,
+  resetFormState,
+} from "../../utils/mainpage/mainSupabase";
+import MainAnswer from "./MainAnswer";
 
 const MainSearchBar = () => {
-  const [question, setQuestion] = useState<string>("");
-  const [answer, setAnswer] = useState<string>("");
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [previewUrl, setPreviewUrl] = useState<string>("");
-  const [user, setUser] = useState<User | null>(null);
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [question, setQuestion] = useState<string>(""); //폼 질문
+  const [answer, setAnswer] = useState<string>(""); //api가 생성한 답변
+  const [isLoading, setIsLoading] = useState<boolean>(false); //api응답 대기
+  const [previewUrl, setPreviewUrl] = useState<string>(""); //질문 폼 이미지
+  const [user, setUser] = useState<User | null>(null); // 유저 정보->제거 예정
+  const searchInputRef = useRef<HTMLInputElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null); // 파일 선택 창 ref
   const [latestUserAnswer, setLatestUserAnswer] = useState<{
     answer_text: string;
     answer_answer: string;
     answer_image: string | null;
-  } | null>(null);
+  } | null>(null); //슈퍼베이스에서 가져온 답변 정보
 
   useEffect(() => {
     const checkUser = async () => {
@@ -26,7 +35,6 @@ const MainSearchBar = () => {
 
       if (!session) {
         alert("로그인 세션이 없습니다.");
-
         return;
       }
 
@@ -36,24 +44,27 @@ const MainSearchBar = () => {
       } else {
         setUser(data.user);
       }
-    };
+    }; //유저 로그인 여부를 확인하는 부분 추후의 대체 예정
 
     const fetchLatestAnswer = async () => {
-      const data = await getAnswerFromSupabase();
-      if (data) {
-        setLatestUserAnswer({
-          answer_text: data.answer_text,
-          answer_answer: data.answer_answer,
-          answer_image: data.answer_image,
-        });
+      if (user) {
+        const data = await getAnswerFromSupabase(user);
+        if (data) {
+          setLatestUserAnswer({
+            answer_text: data.answer_text,
+            answer_answer: data.answer_answer,
+            answer_image: data.answer_image,
+          });
+        }
       }
     };
 
-    if (user) {
-      fetchLatestAnswer();
+    if (searchInputRef.current) {
+      searchInputRef.current.focus();
     }
 
     checkUser();
+    fetchLatestAnswer();
   }, [answer]);
 
   const handleQuestionChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -64,15 +75,7 @@ const MainSearchBar = () => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    if (file.size > 5 * 1024 * 1024) {
-      alert("5MB 이하의 이미지만 업로드 가능합니다.");
-      return;
-    }
-
-    if (!file.type.startsWith("image/")) {
-      alert("이미지 파일만 업로드 가능합니다.");
-      return;
-    }
+    if (!validateImage(file)) return;
 
     const objectUrl = URL.createObjectURL(file);
     setPreviewUrl(objectUrl);
@@ -89,33 +92,7 @@ const MainSearchBar = () => {
     }
   };
 
-  const resetForm = () => {
-    setQuestion("");
-    setPreviewUrl("");
-  };
-
-  const uploadImageToSupabase = async (file: File): Promise<string | null> => {
-    try {
-      const fileName = `${Date.now()}-${file.name}`;
-      const { error: uploadError } = await supabase.storage
-        .from("sorax-img")
-        .upload(fileName, file);
-
-      if (uploadError) {
-        console.error("이미지 업로드 실패:", uploadError);
-        return null;
-      }
-
-      const { data: urlData } = supabase.storage
-        .from("sorax-img")
-        .getPublicUrl(fileName);
-
-      return urlData.publicUrl;
-    } catch (error) {
-      console.error("이미지 처리 중 오류 발생:", error);
-      return null;
-    }
-  };
+  const resetForm = () => resetFormState(setQuestion, setPreviewUrl);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -153,6 +130,7 @@ const MainSearchBar = () => {
       const data = await res.json();
       setAnswer(data);
       resetForm();
+
       const { error } = await supabase.from("answers").insert({
         answer_user_id: user?.id || "",
         answer_text: question,
@@ -172,43 +150,18 @@ const MainSearchBar = () => {
     }
   };
 
-  const getAnswerFromSupabase = async () => {
-    if (!user) {
-      console.error("사용자 정보가 없습니다.");
-      return null;
-    }
-
-    try {
-      const { data, error } = await supabase
-        .from("answers")
-        .select("*")
-        .eq("answer_user_id", user.id)
-        .order("answer_created_at", { ascending: false })
-        .limit(1)
-        .single();
-
-      if (error) {
-        console.error("최신 답변 가져오기 실패:", error);
-        return null;
-      }
-
-      return data;
-    } catch (error) {
-      console.error("최신 답변 조회 중 오류 발생:", error);
-      return null;
-    }
-  };
-
   return (
     <div className="flex flex-col items-center w-full">
       <form onSubmit={handleSubmit} className="w-full max-w-2xl relative mb-5">
         <div className="w-full h-16 bg-[#1a1a1a] rounded-[54.50px] border border-[#4a4a4a] flex items-center px-6">
           <input
             type="text"
+            ref={searchInputRef}
             value={question}
             onChange={handleQuestionChange}
             placeholder="질문을 입력하거나 파일을 업로드해보세요"
-            className="w-full bg-transparent text-white text-lg font-['Gothic_A1'] focus:outline-none"
+            maxLength={100}
+            className="w-full bg-transparent text-white text-lg font-['Gothic_A1'] focus:outline-none break-words"
           />
           <div className="flex items-center gap-4">
             <button
@@ -253,12 +206,9 @@ const MainSearchBar = () => {
         imageUrl={latestUserAnswer?.answer_image || undefined}
       />
 
-      <input
-        ref={fileInputRef}
-        type="file"
-        className="hidden"
-        accept="image/*"
-        onChange={handleImageChange}
+      <MainFileUploader
+        fileInputRef={fileInputRef}
+        handleImageChange={handleImageChange}
       />
     </div>
   );
