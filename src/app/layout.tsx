@@ -1,18 +1,22 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
 import "./globals.css";
 import Header from "../components/Header";
-import Footer from "../components/Footer";
+import { Open_Sans, Noto_Sans_KR } from "next/font/google";
+// import Footer from "../components/Footer";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
+// 영문 폰트
+const openSans = Open_Sans({
+  weight: ["400"],
+  subsets: ["latin"],
+  variable: "--font-atkinson",
 });
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
+
+// 한글 폰트
+const notoSansKR = Noto_Sans_KR({
+  weight: ["400"],
+  subsets: ["latin"],
+  variable: "--font-noto-sans-kr",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -26,13 +30,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="ko">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${openSans.className} ${notoSansKR.className} antialiased flex`}
       >
         <Header />
         {children}
-        <Footer />
+        {/* <Footer /> */}
       </body>
     </html>
   );
