@@ -34,6 +34,7 @@ const MainSearchBar = () => {
     };
 
     checkUser();
+    getAnswerFromSupabase();
   }, []);
 
   const handleQuestionChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -111,7 +112,6 @@ const MainSearchBar = () => {
         }
       }
 
-      // OpenAI API 요청
       const res = await fetch("/api/openai", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -145,6 +145,15 @@ const MainSearchBar = () => {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const getAnswerFromSupabase = async () => {
+    const { data, error } = await supabase
+      .from("answers")
+      .select("*")
+      .eq("answer_user_id", user);
+    if (error) throw error;
+    console.log(data[0]);
   };
 
   return (
