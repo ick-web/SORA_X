@@ -10,7 +10,7 @@ const user = {
 };
 
 const Mycomments = () => {
-  const { data: b, isPending, isError } = useCommentData(user.id);
+  const { data, isPending, isError } = useCommentData(user.id);
   if (isPending) return <p>로딩 중...</p>;
   if (isError) return <p>오류 발생</p>;
 
@@ -18,8 +18,8 @@ const Mycomments = () => {
     <div>
       <div className="border-t border-color-black3 my-6" />
       <div className="flex flex-col  ">
-        {b?.map((bb) => {
-          return <Mycommentcard {...bb} key={bb.comment_id} />;
+        {data?.map((comment) => {
+          return <Mycommentcard {...comment} key={comment.comment_id} />;
         })}
       </div>
     </div>

@@ -11,15 +11,16 @@ const user = {
 };
 
 const MyPage = () => {
-  const { data: b, isPending, isError } = usePostData(user.id);
+  const { data, isPending, isError } = usePostData(user.id);
   if (isPending) return <p>로딩 중...</p>;
   if (isError) return <p>오류 발생</p>;
+
   return (
     <div className="h-100%">
       <div className="border-t border-color-black3 my-6 " />
       <div className="flex flex-col  ">
-        {b?.map((bb) => {
-          return <Myanswercard {...bb} key={bb.answer_id} />;
+        {data?.map((post) => {
+          return <Myanswercard {...post} key={post.answer_id} />;
         })}
       </div>
     </div>
