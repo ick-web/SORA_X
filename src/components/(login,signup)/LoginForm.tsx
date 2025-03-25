@@ -3,27 +3,23 @@
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { createClient } from "@supabase/supabase-js";
 import Link from "next/link";
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
+import supabase from "@/app/supabase/client";
 
 interface LoginFormData {
   email: string;
   password: string;
-};
+}
 
 const LoginForm = () => {
   const router = useRouter();
+  const [error, setError] = useState<string | null>(null); //서버 오류 저장
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<LoginFormData>();
-  const [error, setError] = useState<string | null>(null);
 
   const onSubmit: SubmitHandler<LoginFormData> = async (data) => {
     const { email, password } = data;
@@ -43,7 +39,9 @@ const LoginForm = () => {
   return (
     <div className="w-[400px] bg-neutral-800 text-white p-8 rounded-lg shadow-lg">
       <h3 className="text-2xl font-bold text-center mb-6">로그인</h3>
+
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        {/* 이메일 입력 */}
         <div>
           <label htmlFor="email">Email</label>
           <input
@@ -57,6 +55,7 @@ const LoginForm = () => {
           )}
         </div>
 
+        {/* 비밀번호 입력 */}
         <div>
           <label htmlFor="password">Password</label>
           <input
@@ -74,8 +73,11 @@ const LoginForm = () => {
           로그인
         </button>
 
+        {/* 서버 오류 메시지 */}
         {error && <p className="text-red-500 text-center mt-2">{error}</p>}
       </form>
+
+      {/* 회원가입 링크 */}
       <div className="text-center mt-4">
         <p className="text-gray-400 text-sm">
           아직 계정이 없으신가요?
