@@ -12,7 +12,7 @@ const Sora = () => {
         height={200}
         priority
       />
-      <p className="mt-8">문제해결은, SoraX!</p>
+      <p className="mt-8 text-white">문제해결은, Sora X!</p>
     </div>
   );
 };
