@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import Link from "next/link";
 import supabase from "@/app/supabase/client";
+import { useAuthStore } from "@/stores/store";
 
 interface LoginFormData {
   email: string;
@@ -13,6 +14,7 @@ interface LoginFormData {
 
 const LoginForm = () => {
   const router = useRouter();
+  const { setUser } = useAuthStore();
   const [error, setError] = useState<string | null>(null); //서버 오류 저장
 
   const {
@@ -24,7 +26,7 @@ const LoginForm = () => {
   const onSubmit: SubmitHandler<LoginFormData> = async (data) => {
     const { email, password } = data;
 
-    const { error } = await supabase.auth.signInWithPassword({
+    const { data: userData,error } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
@@ -32,6 +34,10 @@ const LoginForm = () => {
     if (error) {
       setError(error.message);
     } else {
+      if(userData?.user){
+        setUser(userData.user) // Zustand 상태 업데이트
+      }
+
       router.push("/"); // 로그인 성공 시 홈 이동
     }
   };
