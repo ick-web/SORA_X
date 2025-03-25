@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Header from "../components/Header";
 import { Open_Sans, Noto_Sans_KR } from "next/font/google";
+import ReactQueryProvider from "@/context/QueryClientProvider";
 // import Footer from "../components/Footer";
 
 // 영문 폰트
@@ -34,9 +35,12 @@ export default function RootLayout({
       <body
         className={`${openSans.className} ${notoSansKR.className} antialiased flex`}
       >
-        <Header />
-        {children}
-        {/* <Footer /> */}
+        {/* 쿼리클라이언트 추가했습니다. */}
+        <ReactQueryProvider>
+          <Header />
+          <main className="flex-1 p-6">{children}</main>
+          {/* <Footer /> */}
+        </ReactQueryProvider>
       </body>
     </html>
   );
