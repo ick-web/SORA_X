@@ -32,14 +32,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko">
+    <html lang="ko" className="overflow-hidden">
       <body
-        className={`${openSans.className} ${notoSansKR.className} antialiased flex`}
+        className={`${openSans.className} ${notoSansKR.className} antialiased h-screen flex flex-row`}
       >
         {/* 쿼리클라이언트 추가했습니다. */}
         <ReactQueryProvider>
           <Header />
-          <main className="flex-1 p-6">{children}</main>
+          <main className="overflow-y-auto flex-1">{children}</main>
           {/* <Footer /> */}
         </ReactQueryProvider>
       </body>

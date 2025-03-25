@@ -36,8 +36,8 @@ const CommunityPage = async () => {
             >
               {/* 닉네임 + 날짜 */}
               <div className="w-full flex justify-between items-center mb-2">
-                <span className="text-sm text-color-orange2">
-                  {item.user?.user_nickname || "익명"}
+                <span className="text-md text-color-orange2 font-semibold">
+                  🧩 {item.user?.user_nickname || "익명"}
                 </span>
                 <span className="text-sm text-color-black4">
                   {new Date(item.answer_created_at).toLocaleString()}
