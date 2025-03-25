@@ -15,7 +15,6 @@ const openai = new OpenAI({
 
 export const POST = async (req: NextRequest): Promise<NextResponse> => {
   const { question, image_url }: RequestData = await req.json();
-  console.log("User question:", question);
 
   const systemPrompt = `너는 세계에서 수학을 가장 잘 알려주는 사람중에 한명이야. 
   학생들이 너에게 수학문제를 텍스트 혹은 이미지로 질문을 할거고 너는 그 학생의 수준을 고려해서 설명을 해줘야해.
