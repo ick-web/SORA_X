@@ -31,11 +31,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body
-        className={`${openSans.className} ${notoSansKR.className} antialiased flex`}
-      >
+      <body className={`${openSans.className} ${notoSansKR.className} antialiased flex`}>
         <Header />
-        {children}
+        <main className="flex-1 p-6">{children}</main>
         {/* <Footer /> */}
       </body>
     </html>
