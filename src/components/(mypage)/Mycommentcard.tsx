@@ -1,11 +1,5 @@
-//다른 분 pr에 타입파일 새로 만드신거 있길래 일단 여기 넣어뒀습니다.
-type Comment = {
-  comment_created_at: string;
-  comment_content: string;
-  comment_user_id: string;
-  comment_id: string;
-  comment_answer_id: string;
-};
+import { Comment } from "@/types/mypageTypes";
+import { FaCircleChevronRight } from "react-icons/fa6";
 
 const Mycommentcard = (comment: Comment) => {
   return (
@@ -21,7 +15,9 @@ const Mycommentcard = (comment: Comment) => {
           </button>
         </div>
       </div>
-      <div className="flex-5">화살표 자리</div>
+      <div className="flex-5 items-center mt-2">
+        <FaCircleChevronRight className="block fontSize-2em" />
+      </div>
     </div>
   );
 };
