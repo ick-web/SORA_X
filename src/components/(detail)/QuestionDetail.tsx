@@ -1,8 +1,7 @@
 import { fetchAnswerById } from "@/utils/detail/fetchAnswerById";
 import Image from "next/image";
 
-const QuestionDetail = async () => {
-  const answerId = "d61751e4-931a-4779-9d97-66654be5da2f"; // 임시로 answer_id 넣음
+const QuestionDetail = async ({answerId}: {answerId: string}) => {
   const data = await fetchAnswerById(answerId);
 
   if (!data) return <p>데이터를 불러오지 못했습니다.</p>;

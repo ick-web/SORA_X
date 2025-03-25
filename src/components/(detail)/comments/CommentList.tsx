@@ -2,14 +2,13 @@ import { fetchCommentById } from "@/utils/detail/fetchCommentById";
 import CommentInput from "./CommentInput";
 import { Comment } from "@/types/commentTypes";
 
-const CommentList = async () => {
-  const answerId = "bafb482a-b5f6-43ea-af90-254941ecb660"; // 임시로 answer_id 넣음
+const CommentList = async ({answerId}: {answerId: string}) => {
   const comments: Comment[] = await fetchCommentById(answerId);
 
   return (
     <div>
       <h2 className="text-2xl mb-4">COMMENT</h2>
-      {comments ? (
+      {comments.length > 0 ? (
         comments.map((comment) => (
           <div
             key={comment.comment_id}
