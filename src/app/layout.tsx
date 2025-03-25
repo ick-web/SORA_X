@@ -35,12 +35,9 @@ export default function RootLayout({
       <body
         className={`${openSans.className} ${notoSansKR.className} antialiased flex`}
       >
-        {/* 쿼리클라이언트 추가했습니다. */}
-        <ReactQueryProvider>
-          <Header />
-          <main className="flex-1 p-6">{children}</main>
-          {/* <Footer /> */}
-        </ReactQueryProvider>
+        <Header />
+        {children}
+        {/* <Footer /> */}
       </body>
     </html>
   );
