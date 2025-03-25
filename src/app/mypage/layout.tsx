@@ -3,6 +3,7 @@
 import MypageHeader from "@/components/(mypage)/mypageHeader";
 import { ReactNode, useState } from "react";
 import supabase from "../supabase/client";
+import { RiEdit2Fill } from "react-icons/ri";
 
 const Layout = ({ children }: { children: ReactNode }) => {
   //수정state
@@ -11,32 +12,37 @@ const Layout = ({ children }: { children: ReactNode }) => {
   const [canChange, setCanChange] = useState<boolean>(false);
 
   //주스탄드 쓸 예정
-  let user = {
+  const user = {
     id: "6945ddb3-1281-4b59-b16c-f238709e37a9",
     nickname: "수수수",
   };
 
   //중복 확인//타입 넣기
   const checkNickname = async () => {
-    const { data: users, error } = await supabase
-      .from("users")
-      .select("user_nickname");
-    if (error) {
-      console.log("오류남");
+    if (newNickName === "") {
+      alert("닉네임을 입력해주세요!");
     } else {
-      const isExist = users.some((user) => user.user_nickname === newNickName);
-
-      if (isExist) {
-        alert("이미 존재합니다!");
+      const { data: users, error } = await supabase
+        .from("users")
+        .select("user_nickname");
+      if (error) {
+        console.log("오류남");
       } else {
-        alert("추가할 수 있습니다~!");
-        setCanChange(true);
+        const isExist = users.some(
+          (user) => user.user_nickname === newNickName
+        );
+        if (isExist) {
+          alert("이미 존재합니다!");
+        } else {
+          alert("추가할 수 있습니다~!");
+          setCanChange(true);
+        }
       }
     }
   };
 
   //수정하기
-  const changeNickname = async (e) => {
+  const changeNickname = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (canChange) {
       const { data, error } = await supabase
@@ -64,9 +70,9 @@ const Layout = ({ children }: { children: ReactNode }) => {
         <div className="flex flex-row">
           <div
             onClick={() => setIsVisible(!isVisible)}
-            className="px-4 py-2 text-white rounded-md"
+            className="px-4 py-2 text-white rounded-md mt-1"
           >
-            수정아이콘
+            <RiEdit2Fill className="text-color-orange1 text-2xl" />
           </div>
           <form
             onSubmit={changeNickname}
@@ -75,6 +81,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
             } flex flex-row p-1 bg-gray-200 rounded-md gap-1`}
           >
             <input
+              className="text-color-orange1"
               value={newNickName}
               onChange={(e) => setNewNickName(e.target.value)}
             />

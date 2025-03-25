@@ -1,12 +1,5 @@
-//다른 분 pr에 타입파일 새로 만드신거 있길래 일단 여기 넣어뒀습니다.
-type Answer = {
-  answer_id: string;
-  answer_create_at: string;
-  answer_image: string | null;
-  answer_text: string;
-  answer_answer: string;
-  answer_user_id: string;
-};
+import { Answer } from "@/types/mypageTypes";
+import { FaCircleChevronRight } from "react-icons/fa6";
 
 const Mycard = (answer: Answer) => {
   return (
@@ -31,7 +24,9 @@ const Mycard = (answer: Answer) => {
         </div>
       )}
 
-      <div className="flex-5">화살표 자리</div>
+      <div className="flex-5 items-center mt-2">
+        <FaCircleChevronRight className="block fontSize-2em" />
+      </div>
     </div>
   );
 };
