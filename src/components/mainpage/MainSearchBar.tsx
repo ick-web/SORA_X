@@ -17,7 +17,9 @@ const MainSearchBar = () => {
 
   useEffect(() => {
     const checkUser = async () => {
-      const session = supabase.auth.getSession(); // 현재 세션 정보 가져오기
+
+      const session = supabase.auth.getSession();
+
 
       if (!session) {
         alert("로그인 세션이 없습니다.");
@@ -34,6 +36,7 @@ const MainSearchBar = () => {
     };
 
     checkUser();
+    getAnswerFromSupabase();
   }, []);
 
   // useEffect(() => {
@@ -83,20 +86,26 @@ const MainSearchBar = () => {
   };
 
   const uploadImageToSupabase = async (file: File): Promise<string | null> => {
-    const fileName = `${Date.now()}-${file.name}`;
-    const { error } = await supabase.storage
-      .from("sorax-img")
-      .upload(fileName, file);
+    try {
+      const fileName = `${Date.now()}-${file.name}`;
+      const { error: uploadError } = await supabase.storage
+        .from("sorax-img")
+        .upload(fileName, file);
 
-    if (error) {
-      console.error("이미지 업로드 실패:", error);
+      if (uploadError) {
+        console.error("이미지 업로드 실패:", uploadError);
+        return null;
+      }
+
+      const { data: urlData } = supabase.storage
+        .from("sorax-img")
+        .getPublicUrl(fileName);
+
+      return urlData.publicUrl;
+    } catch (error) {
+      console.error("이미지 처리 중 오류 발생:", error);
       return null;
     }
-
-    const { data: urlData } = supabase.storage
-      .from("sorax-img")
-      .getPublicUrl(fileName);
-    return urlData.publicUrl;
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -108,21 +117,29 @@ const MainSearchBar = () => {
 
     let imageUrl: string | null = null;
 
-    if (fileInputRef.current?.files?.[0]) {
-      imageUrl = await uploadImageToSupabase(fileInputRef.current.files[0]);
-      if (!imageUrl) {
-        alert("이미지 업로드 실패");
-        setIsLoading(false);
-        return;
-      }
-    }
-
     try {
+      if (fileInputRef.current?.files?.[0]) {
+        imageUrl = await uploadImageToSupabase(fileInputRef.current.files[0]);
+        if (!imageUrl) {
+          alert("이미지 업로드에 실패했습니다. 다시 시도해주세요.");
+          setIsLoading(false);
+          return;
+        }
+      }
+
       const res = await fetch("/api/openai", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ question, image_url: imageUrl }),
+        body: JSON.stringify({
+          question,
+          image_url: imageUrl,
+        }),
       });
+
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.error || "API 요청 실패");
+      }
 
       const data = await res.json();
       setAnswer(data);
@@ -143,6 +160,15 @@ const MainSearchBar = () => {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const getAnswerFromSupabase = async () => {
+    const { data, error } = await supabase
+      .from("answers")
+      .select("*")
+      .eq("answer_user_id", user);
+    if (error) throw error;
+    console.log(data[0]);
   };
 
   return (
