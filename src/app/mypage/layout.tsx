@@ -56,6 +56,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
         //alert(`${error}`);
       } else {
         //alert(" " + data[0]);
+        alert("추가되었습니다");
         console.log(data);
       }
     } else {
@@ -78,7 +79,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
             onSubmit={changeNickname}
             className={`${
               isVisible ? "block" : "hidden"
-            } flex flex-row p-1 bg-gray-200 rounded-md gap-1`}
+            } flex flex-row p-1 bg-color-black2 rounded-md gap-1`}
           >
             <input
               className="text-color-orange1"
@@ -86,7 +87,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
               onChange={(e) => setNewNickName(e.target.value)}
             />
             <button
-              className="border-2 border-orange-500 bg-orange-500 rounded "
+              className="border-2 border-color-orange1 bg-color-orange1 rounded "
               type="button"
               onClick={() => {
                 checkNickname();
@@ -95,7 +96,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
               중복검사
             </button>
             <button
-              className="border-2 border-orange-500 bg-orange-500 rounded "
+              className="border-2 border-color-orange1 bg-color-orange1 rounded "
               type="submit"
             >
               수정
@@ -103,10 +104,10 @@ const Layout = ({ children }: { children: ReactNode }) => {
           </form>
         </div>
       </div>
-      <div className="bg-gray-700 m-8 py-10 text-xl text-white rounded-xl">
+      <div className="bg-color-black2 m-8 py-10 text-xl text-white rounded-xl">
         <div className="pl-5 flex flex-row">
-          <p className="text-orange-500 font-bold pr-1">{user.nickname}님</p>의
-          질문과 답변을 모아보고 복습해보세요!
+          <p className="text-color-orange1 font-bold pr-1">{user.nickname}님</p>
+          의 질문과 답변을 모아보고 복습해보세요!
         </div>
       </div>
       <MypageHeader />

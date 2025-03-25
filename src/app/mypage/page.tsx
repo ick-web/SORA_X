@@ -18,12 +18,7 @@ const MyPage = async () => {
   const getuserpost = async (userid: string) => {
     const { data, error } = await supabase
       .from(SUPABASE_TABLE_NAME.ANSWER)
-      .select(
-        `
-      *,
-      users(*)
-    `
-      )
+      .select(`*`)
       .eq("answer_user_id", userid);
     if (error) {
       throw error;
@@ -34,8 +29,8 @@ const MyPage = async () => {
   const a = await getuserpost(user.id);
 
   return (
-    <div>
-      <div className="border-t border-gray-400 my-6" />
+    <div className="h-100%">
+      <div className="border-t border-color-black3 my-6 " />
       <div className="flex flex-col  ">
         {a?.map((aa) => {
           return <Myanswercard {...aa} key={aa.answer_id} />;

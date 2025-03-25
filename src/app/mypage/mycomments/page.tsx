@@ -35,7 +35,7 @@ const mycomments = async () => {
 
   return (
     <div>
-      <div className="border-t border-gray-400 my-6" />
+      <div className="border-t border-color-black3 my-6" />
       <div className="flex flex-col  ">
         {a?.map((aa) => {
           return <Mycommentcard {...aa} key={aa.comment_id} />;
