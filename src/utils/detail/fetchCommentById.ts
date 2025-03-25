@@ -9,7 +9,7 @@ export const fetchCommentById = async (
       .from("comments")
       .select("*, users (user_nickname)")
       .eq("comment_answer_id", answerId)
-      .order("comment_created_at", { ascending: true }); // 최신 순 정렬
+      .order("comment_created_at", { ascending: false }); // 최신 순 정렬
 
     if (error) throw error;
 

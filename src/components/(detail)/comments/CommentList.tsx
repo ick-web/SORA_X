@@ -1,9 +1,26 @@
+"use client"
+
 import { fetchCommentById } from "@/utils/detail/fetchCommentById";
 import CommentInput from "./CommentInput";
 import { Comment } from "@/types/commentTypes";
+import { useEffect, useState } from "react";
 
-const CommentList = async ({answerId}: {answerId: string}) => {
-  const comments: Comment[] = await fetchCommentById(answerId);
+const CommentList = ({ answerId }: { answerId: string }) => {
+  // const comments: Comment[] = await fetchCommentById(answerId);
+
+  const [comments, setComments] = useState<Comment[]>([]);
+
+  useEffect(() => {
+    const getComments = async () => {
+      const fetchedComments = await fetchCommentById(answerId);
+      setComments(fetchedComments);
+    };
+    getComments();
+  }, [answerId]);
+
+  // const handleAddComment = (newComment: Comment) => {
+  //   setComments((prevComments) => [...prevComments, newComment]);
+  // };
 
   return (
     <div>
@@ -24,7 +41,7 @@ const CommentList = async ({answerId}: {answerId: string}) => {
       ) : (
         <p className="text-color-black2">아직 댓글이 없습니다.</p>
       )}
-      <CommentInput />
+      <CommentInput answerId={answerId} />
     </div>
   );
 };
