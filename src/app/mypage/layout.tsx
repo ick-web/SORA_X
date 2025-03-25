@@ -112,7 +112,6 @@ const Layout = ({ children }: { children: ReactNode }) => {
             </div>
           </div>
           <MypageHeader />
-          <div className="border-t border-color-black3 my-6 " />
         </div>
         <div className="flex-1  overflow-y-auto ">{children}</div>
       </div>

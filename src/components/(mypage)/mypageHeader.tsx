@@ -1,16 +1,29 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { motion } from "framer-motion";
+import { usePathname } from "next/navigation";
 
 const MypageHeader = () => {
-  //페이지 클릭
-  const [isClicked, setIsClicked] = useState<boolean>(false);
-  //추후 어느 것이 클릭 됐는지 나타내는 기능... (테두리 생각 중) 추가 예정
+  const pathname = usePathname();
   return (
     <div className="flex flex-row text-xl font-bold gap-3 ">
-      <Link href="/mypage">나의 질문</Link>
-      <Link href="/mypage/mycomments">나의 댓글</Link>
+      <div className="relative flex gap-4">
+        <Link href="/mypage">나의 질문</Link>
+        <Link href="/mypage/mycomments">나의 댓글</Link>
+
+        {/* 애니메이션 되는 언더라인 */}
+        <motion.div
+          className="absolute bottom-0 h-1 bg-white"
+          layoutId="underline"
+          initial={false}
+          animate={{
+            width: pathname === "/mypage" ? "80px" : "80px", // 탭 크기 조절
+            x: pathname === "/mypage" ? "0%" : "118%", // 왼쪽 <-->오른쪽 이동
+          }}
+          transition={{ type: "spring", stiffness: 300, damping: 30 }}
+        />
+      </div>
     </div>
   );
 };
