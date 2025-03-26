@@ -5,12 +5,15 @@ import { ReactNode, useEffect, useState } from "react";
 import supabase from "../supabase/client";
 import { RiEdit2Fill } from "react-icons/ri";
 import { useNicknameData, useUserData } from "@/hooks/mypage/useUserData";
+import { AlertSuccess, AlertError, AlertInfo } from "@/utils/alert";
+import { useQueryClient } from "@tanstack/react-query";
 
 const Layout = ({ children }: { children: ReactNode }) => {
   //수정state
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [newNickName, setNewNickName] = useState<string>("");
   const [canChange, setCanChange] = useState<boolean>(false);
+  const queryClient = useQueryClient();
   //유저 정보 state
   const [usernickname, setNickname] = useState<string>("");
 
@@ -40,21 +43,21 @@ const Layout = ({ children }: { children: ReactNode }) => {
   //중복확인
   const checkNickname = async () => {
     if (newNickName === "") {
-      alert("닉네임을 입력해주세요!");
+      AlertInfo("안내", "닉네임을 입력해주세요!");
     } else {
       const { data: users, error } = await supabase
         .from("users")
         .select("user_nickname");
       if (error) {
-        console.log("오류남");
+        AlertError("오류", "죄송합니다! 오류가 발생했습니다!");
       } else {
         const isExist = users.some(
           (user) => user.user_nickname === newNickName
         );
         if (isExist) {
-          alert("이미 존재합니다!");
+          AlertInfo("안내", "이미 존재합니다!");
         } else {
-          alert("추가할 수 있습니다~!");
+          AlertSuccess("성공!", "추가할 수 있습니다~!");
           setCanChange(true);
         }
       }
@@ -70,13 +73,15 @@ const Layout = ({ children }: { children: ReactNode }) => {
         .update({ user_nickname: newNickName })
         .eq("user_id", userid);
       if (error) {
-        alert(`${error}`);
+        AlertError("오류", "죄송합니다! 오류가 발생했습니다!");
       } else {
-        alert("추가되었습니다");
+        AlertSuccess("성공!!", "수정 되었습니다");
+        queryClient.setQueryData(["nickname", userid], newNickName);
         setNickname(newNickName);
+        setCanChange(false);
       }
     } else {
-      alert("중복검사를 먼저 해주세요!");
+      AlertInfo("안내", "중복검사를 먼저 진행해주세요!");
     }
   };
 
