@@ -11,7 +11,6 @@ const ToggleLogIn = () => {
   const handleLogout = async () => {
     await supabase.auth.signOut();
     logout(); // Zustand 상태 초기화
-    sessionStorage.removeItem("firstRender") // sessionStorage 초기화
     router.push("/login"); // 로그인 페이지로 이동
   };
 
