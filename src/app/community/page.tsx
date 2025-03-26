@@ -1,13 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import supabase from "../supabase/client";
 import { Answer } from "@/types/mainTypes";
 import { IoIosArrowForward } from "react-icons/io";
+import Link from "next/link";
 
 const CommunityPage = () => {
-  const router = useRouter();
   const [answers, setAnswers] = useState<Answer[]>([]);
   const [error, setError] = useState<string | null>(null);
 
@@ -48,42 +47,43 @@ const CommunityPage = () => {
           {answers?.map((item: Answer) => (
             <div
               key={item.answer_id}
-              onClick={() => router.push(`/detail/${item.answer_id}`)} // ✅ 클릭 시 이동
               className="w-full h-40 overflow-y-hidden bg-color-black1 text-white text-justify text-md rounded-lg cursor-pointer hover:bg-color-black2 transition"
             >
-              {/* 닉네임 + 날짜 */}
-              <div className="w-full flex justify-between items-center mb-2">
-                <span className="text-md text-color-orange2 font-semibold">
-                  🧩 {item.user?.user_nickname || "익명"}
-                </span>
-                <span className="text-sm text-color-black4">
-                  {new Date(item.answer_created_at).toLocaleString()}
-                </span>
-              </div>
-              <div className="w-full h-56 flex justify-between">
-                <div className="flex flex-col">
-                  {/* 질문 */}
-                  <h2 className="text-md text-white font-semibold mb-2">
-                    {item.answer_text}
-                  </h2>
-                  {/* 답변 */}
-                  <p className=" w-full line-clamp-3 text-color-black4">
-                    {item.answer_answer}
-                  </p>
+              <Link href={`/detail/${item.answer_id}`}>
+                {/* 닉네임 + 날짜 */}
+                <div className="w-full flex justify-between items-center mb-2">
+                  <span className="text-md text-color-orange2 font-semibold">
+                    🧩 {item.user?.user_nickname || "익명"}
+                  </span>
+                  <span className="text-sm text-color-black4">
+                    {new Date(item.answer_created_at).toLocaleString()}
+                  </span>
                 </div>
-                {/* 질문 이미지 (null 가능) */}
-                {item.answer_image && (
-                  <div className="border rounded-lg w-52 h-36 flex justify-center items-center">
-                    <img
-                      src={item.answer_image}
-                      alt="질문 이미지"
-                      className="w-full h-full object-contain"
-                    />
+                <div className="w-full h-56 flex justify-between">
+                  <div className="flex flex-col">
+                    {/* 질문 */}
+                    <h2 className="text-md text-white font-semibold mb-2">
+                      {item.answer_text}
+                    </h2>
+                    {/* 답변 */}
+                    <p className=" w-full line-clamp-3 text-color-black4">
+                      {item.answer_answer}
+                    </p>
                   </div>
-                )}
-                {/* 화살표 아이콘 */}
-                <IoIosArrowForward className="w-8 h-8 aspect-square text-xl text-gray-300 bg-color-black4 rounded-full p-2 flex items-center justify-center" />
-              </div>
+                  {/* 질문 이미지 (null 가능) */}
+                  {item.answer_image && (
+                    <div className="border rounded-lg w-52 h-36 flex justify-center items-center">
+                      <img
+                        src={item.answer_image}
+                        alt="질문 이미지"
+                        className="w-full h-full object-contain"
+                      />
+                    </div>
+                  )}
+                  {/* 화살표 아이콘 */}
+                  <IoIosArrowForward className="w-8 h-8 aspect-square text-xl text-gray-300 bg-color-black4 rounded-full p-2 flex items-center justify-center" />
+                </div>
+              </Link>
             </div>
           ))}
         </div>
