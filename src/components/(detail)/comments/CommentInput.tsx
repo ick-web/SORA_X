@@ -51,7 +51,7 @@ const CommentInput = ({
         onChange={(e) => setComment(e.target.value)}
       />
       <button
-        className="w-20 ml-2 px-4 py-2 bg-color-orange1 rounded"
+        className="w-20 ml-2 px-4 py-2 bg-color-orange1 rounded duration-300 hover:bg-color-orange2"
         onClick={handleAddComment}
       >
         등록
