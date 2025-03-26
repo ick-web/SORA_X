@@ -4,6 +4,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
 import { IoIosArrowForward } from "react-icons/io";
+import { AlertCheck } from "@/utils/alert";
 
 const Mycard = (answer: Answer) => {
   const queryClient = useQueryClient();
@@ -15,8 +16,16 @@ const Mycard = (answer: Answer) => {
     },
   });
 
-  const handleDelte = (answerId: string) => {
-    if (confirm("게시글을 삭제하시겠습니까?")) {
+  const handleDelte = async (answerId: string) => {
+    const isConfirmed = await AlertCheck(
+      "게시글 삭제",
+      "정말로 이 게시글을 삭제하시겠습니까?",
+      "삭제",
+      "삭제 완료",
+      "게시글이 삭제되었습니다."
+    );
+
+    if (isConfirmed) {
       deleteMutation.mutate(answerId);
     }
   };

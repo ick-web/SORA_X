@@ -2,7 +2,9 @@ import { Comment } from "@/types/mypageTypes";
 import { deleteComment } from "@/utils/mypage/mypagedelete";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Link from "next/link";
+
 import { IoIosArrowForward } from "react-icons/io";
+import { AlertCheck } from "@/utils/alert";
 
 const Mycommentcard = (comment: Comment) => {
   const queryClient = useQueryClient();
@@ -13,11 +15,19 @@ const Mycommentcard = (comment: Comment) => {
       queryClient.invalidateQueries({ queryKey: ["comments"] });
     },
   });
-  const handleDelete = (commentId: string) => {
-    if (confirm("댓글을 삭제하시겠습니까?")) {
+  const handleDelete = async (commentId: string) => {
+    const isConfirmed = await AlertCheck(
+      "댓글 삭제",
+      "정말로 이 댓글을 삭제하시겠습니까?",
+      "삭제",
+      "삭제 완료",
+      "댓글이 삭제되었습니다."
+    );
+    if (isConfirmed) {
       deleteMutation.mutate(commentId);
     }
   };
+
   //
   return (
     <div className="border border-color-black2 m-2 rounded-xl">
