@@ -7,7 +7,7 @@ const SUPABASE_TABLE_NAME = {
 };
 
 //유저 게시글 불러오기
-const getuserpost = async (userid: string) => {
+const getuserpost = async (userid: string | undefined) => {
   const { data, error } = await supabase
     .from(SUPABASE_TABLE_NAME.ANSWER)
     .select(`*`)
@@ -18,17 +18,19 @@ const getuserpost = async (userid: string) => {
   return data;
 };
 
-export const usePostData = (userId: string) => {
+export const usePostData = (userId: string | undefined, options = {}) => {
   return useQuery({
     queryKey: ["answers", userId],
     queryFn: () => getuserpost(userId),
     staleTime: 1000 * 60 * 5, // 5분 동안 캐싱 유지
+    enabled: !!userId, // userId가 없으면 실행 안 함
+    ...options, // 추가 옵션 허용
   });
 };
 
 //유저 댓글 불러오기
 
-const getusercomment = async (userid: string) => {
+const getusercomment = async (userid: string | undefined) => {
   const { data, error } = await supabase
     .from(SUPABASE_TABLE_NAME.COMMENTS)
     .select(`*`)
@@ -39,10 +41,52 @@ const getusercomment = async (userid: string) => {
   return data;
 };
 
-export const useCommentData = (userId: string) => {
+export const useCommentData = (userId: string | undefined, options = {}) => {
   return useQuery({
     queryKey: ["comments", userId],
     queryFn: () => getusercomment(userId),
+    staleTime: 1000 * 60 * 5, // 5분 동안 캐싱 유지
+    enabled: !!userId, // userId가 없으면 실행 안 함
+    ...options, // 추가 옵션 허용
+  });
+};
+
+//유저 정보
+export const getUser = async () => {
+  const { data, error } = await supabase.auth.getUser();
+  if (error) {
+    alert("사용자 정보를 가져오는 중 에러가 발생했습니다.");
+  } else {
+    return data.user.id;
+  }
+};
+
+export const useUserData = () => {
+  return useQuery({
+    queryKey: ["user"],
+    queryFn: () => getUser(),
+    staleTime: 1000 * 60 * 5, // 5분 동안 캐싱 유지
+  });
+};
+
+//유저 닉네임
+const getUserNickname = async (userId: string) => {
+  const { data, error } = await supabase
+    .from("users")
+    .select("user_nickname")
+    .eq("user_id", userId)
+    .single(); // 단일 데이터 조회
+  if (error) {
+    console.error("유저 닉네임 조회 에러:", error.message);
+    return null;
+  }
+  return data?.user_nickname;
+};
+
+export const useNicknameData = (userId: string) => {
+  return useQuery({
+    queryKey: ["nickname", userId],
+    queryFn: () => getUserNickname(userId),
     staleTime: 1000 * 60 * 5, // 5분 동안 캐싱 유지
   });
 };

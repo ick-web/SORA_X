@@ -1,26 +1,19 @@
 "use client";
 
 import Myanswercard from "@/components/(mypage)/Myanswercard";
-import { usePostData } from "@/hooks/mypage/useUserData";
-import { useEffect, useState } from "react";
-import supabase from "../supabase/client";
+import { usePostData, useUserData } from "@/hooks/mypage/useUserData";
 
 const MyPage = () => {
-  const [userid, setUserid] = useState<string>("");
-
-  useEffect(() => {
-    getUser();
-  }, []);
-
-  const getUser = async () => {
-    const { data, error } = await supabase.auth.getUser();
-    if (error) {
-      alert("사용자 정보를 가져오는 중 에러가 발생했습니다.");
-    } else {
-      setUserid(data.user.id);
-    }
-  };
+  const {
+    data: userid,
+    isPending: isUserPending,
+    isError: isUserError,
+  } = useUserData();
   const { data, isPending, isError } = usePostData(userid);
+
+  if (isUserPending) return <p>유저 정보 로딩 중...</p>;
+  if (isUserError || !userid) return <p>유저 정보를 불러오는 중 오류 발생</p>;
+
   if (isPending) return <p>로딩 중...</p>;
   if (isError) return <p>오류 발생</p>;
 

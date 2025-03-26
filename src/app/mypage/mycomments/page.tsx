@@ -1,26 +1,24 @@
 "use client";
-import supabase from "@/app/supabase/client";
+
 import Mycommentcard from "@/components/(mypage)/Mycommentcard";
-import { useCommentData } from "@/hooks/mypage/useUserData";
-import { useEffect, useState } from "react";
+import { useCommentData, useUserData } from "@/hooks/mypage/useUserData";
 
 const Mycomments = () => {
-  useEffect(() => {
-    getUser();
-  }, []);
+  const {
+    data: userid,
+    isPending: isUserPending,
+    isError: isUserError,
+  } = useUserData();
 
-  const [userid, setUserid] = useState<string>("");
-  const getUser = async () => {
-    const { data, error } = await supabase.auth.getUser();
-    if (error) {
-      alert("사용자 정보를 가져오는 중 에러가 발생했습니다.");
-    } else {
-      setUserid(data.user.id);
-    }
-  };
-  const { data, isPending, isError } = useCommentData(userid);
-  if (isPending) return <p>로딩 중...</p>;
-  if (isError) return <p>오류 발생</p>;
+  const { data, isPending, isError } = useCommentData(userid, {
+    enabled: !!userid, // userid가 존재할 때만 실행됨
+  });
+
+  if (isUserPending) return <p>유저 정보 로딩 중...</p>;
+  if (isUserError || !userid) return <p>유저 정보를 불러오는 중 오류 발생</p>;
+
+  if (isPending) return <p>댓글 정보 로딩 중...</p>;
+  if (isError) return <p>댓글 정보를 불러오는 중오류 발생</p>;
 
   return (
     <div>
