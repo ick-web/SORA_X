@@ -19,7 +19,7 @@ const CommentRank = ({ commentUsers }: { commentUsers: CommentUsersResponse[] | 
               {commentCount[i] ? `${count} 등` : ""}
             </p>
             <p className="w-56 text-xl mr-96">{userNickname[i]}</p>
-            <p className="w-16 text-xl text-right">{commentCount[i] ? `${commentCount[i]}회` : ""}</p>
+            <p className="w-16 flex-1 text-xl text-right">{commentCount[i] ? `${commentCount[i]}회` : ""}</p>
           </li>
         );
       })}
