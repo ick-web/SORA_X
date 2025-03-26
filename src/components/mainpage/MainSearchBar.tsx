@@ -14,6 +14,7 @@ import {
   resetFormState,
 } from "../../utils/mainpage/mainSupabase";
 import MainAnswer from "./MainAnswer";
+import { NO_ANSWER } from "@/constants/mainpage/cardComment";
 
 const MainSearchBar = () => {
   const [question, setQuestion] = useState<string>(""); //폼 질문
@@ -21,8 +22,8 @@ const MainSearchBar = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false); //api응답 대기
   const [previewUrl, setPreviewUrl] = useState<string>(""); //질문 폼 이미지
   const [user, setUser] = useState<User | null>(null); // 유저 정보->제거 예정
-  const searchInputRef = useRef<HTMLInputElement>(null);
-  const fileInputRef = useRef<HTMLInputElement>(null); // 파일 선택 창 ref
+  const searchInputRef = useRef<HTMLInputElement>(null); //포커싱을 주기위한 inputRef
+  const fileInputRef = useRef<HTMLInputElement>(null); // 파일 선택 창 Ref
   const [latestUserAnswer, setLatestUserAnswer] = useState<{
     answer_text: string;
     answer_answer: string;
@@ -92,7 +93,7 @@ const MainSearchBar = () => {
     }
   };
 
-  const resetForm = () => resetFormState(setQuestion, setPreviewUrl);
+  const resetForm = () => resetFormState(setQuestion, setPreviewUrl); //폼 제출 후 폼을 초기화
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -131,7 +132,12 @@ const MainSearchBar = () => {
       setAnswer(data);
       resetForm();
 
+      if (data === NO_ANSWER) {
+        return; //답변을 생서하지 못하거나 문제를 인식하지 못한경우 함수를 종료 & answer로 비교할시 비동기 처리 문제 때문에 원하는결과를 얻지 못할수도있음
+      }
+
       const { error } = await supabase.from("answers").insert({
+        //api 응답을 슈퍼베이스에 저장
         answer_user_id: user?.id || "",
         answer_text: question,
         answer_image: imageUrl,
