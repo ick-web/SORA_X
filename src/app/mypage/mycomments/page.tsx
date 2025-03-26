@@ -22,10 +22,17 @@ const Mycomments = () => {
 
   return (
     <div>
-      <div className="flex flex-col  ">
-        {data?.map((comment) => {
-          return <Mycommentcard {...comment} key={comment.comment_id} />;
-        })}
+      <div className="flex flex-col">
+        {data && data.length > 0 ? (
+          data.map((comment) => (
+            <Mycommentcard {...comment} key={comment.comment_id} />
+          ))
+        ) : (
+          <p className="text-center text-color-orange2 m-10">
+            작성한 댓글이 없습니다. 게시글을 둘러보며 댓글을 작성해보는 것이
+            어떨까요? ☺️
+          </p>
+        )}
       </div>
     </div>
   );
