@@ -8,8 +8,8 @@
 
 ✅ 홈화면(Sora X) – 사용자는 이미지와 텍스트를 통해 문제 풀이 방법을 검색할 수 있어요.<br>
 ✅ 커뮤니티(질문의 광장) – 사용자의 전체 질의응답 데이터를 한곳에서!<br>
-✅ 페이지 - 소개내용</br>
-✅ 페이지 - 소개내용<br>
+✅ 랭킹(학습 랭크) 페이지 - 사용자가 질문을 얼마나 많이했는지, 댓글을 얼마나 많이 남겼는지에 따라 순위를 보여줍니다!</br>
+✅ 문제 풀이 상세 페이지 - 사용자의 질문과 풀이 내용을 확인할 수 있고, 댓글로 소통도 가능합니다!<br>
 
 <br>
 
@@ -103,7 +103,7 @@
 | 김종연 | 담당 페이지를 적어주세요                                      | [종연 Github](https://github.com/kjjyyy01)   | [종연 블로그](https://velog.io/@kjjyyy01/posts)     |
 | 유익환 | 로그인, 회원가입 페이지                                       | [익환 Github](https://github.com/ick-web/)   | [익환 블로그](https://devyu0001.tistory.com/)       |
 | 유선영 | 담당 페이지를 적어주세요                                      | [선영 Github](https://github.com/usuny0317)  | [선영 블로그](https://velog.io/@usuny0317/posts)    |
-| 김시헌 | 담당 페이지를 적어주세요                                      | [시헌 Github](https://github.com/shoney02)   | [시헌 블로그](https://velog.io/@shoney02/posts)     |
+| 김시헌 | 질문 & 풀이 상세 페이지, 댓글 CRUD 담당                        | [시헌 Github](https://github.com/shoney02)   | [시헌 블로그](https://velog.io/@shoney02/posts)     |
 | 김도현 | Navigation Header, 질문의 광장 페이지, 소라멤버스 페이지 담당 | [도현 Github](https://github.com/woodie2933) | [도현 블로그](https://velog.io/@doni_kim/posts)     |
 
 <br />
