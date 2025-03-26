@@ -32,17 +32,16 @@ const MainSearchBar = () => {
   const router = useRouter();
   useEffect(() => {
     const checkUser = async () => {
-      const { data: sessionData } = await supabase.auth.getSession();
+      // const { data: sessionData } = await supabase.auth.getSession();
 
-      if (!sessionData.session) {
-        AlertError("로그인 세션이 없습니다.");
-        router.push("/login");
-        return;
-      }
+      // if (!sessionData.session) {
+      //   AlertError("로그인 세션이 없습니다.");
+      //   router.push("/login");
+      //   return;
+      // }
 
       const { data, error } = await supabase.auth.getUser();
       if (error) {
-        AlertError("유저 정보를 가져오는데 오류가 발생했습니다.");
       } else {
         setUser(data.user);
       }
