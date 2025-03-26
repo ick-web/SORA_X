@@ -16,7 +16,7 @@ const Mycard = (answer: Answer) => {
     },
   });
 
-  const handleDelte = async (answerId: string) => {
+  const handleDelete = async (answerId: string) => {
     const isConfirmed = await AlertCheck(
       "게시글 삭제",
       "정말로 이 게시글을 삭제하시겠습니까?",
@@ -32,14 +32,7 @@ const Mycard = (answer: Answer) => {
 
   return (
     <div className="border border-color-black2 m-2 rounded-xl">
-      <Link
-        href={{
-          pathname: "/detail",
-          query: {
-            answer_id: answer.answer_id,
-          },
-        }}
-      >
+      <Link href={`/detail/${answer.answer_id}`}>
         <div className="flex flex-row mx-10 my-3 justify-center text-center">
           <div className="flex-1 m-1">
             <div className="text-xl font-bold line-clamp-1 ">
@@ -66,7 +59,7 @@ const Mycard = (answer: Answer) => {
       <button
         className="border-2 border-color-orange1 bg-color-orange1 rounded p-1 mb-3 ml-3"
         onClick={() => {
-          handleDelte(answer.answer_id);
+          handleDelete(answer.answer_id);
         }}
       >
         삭제

@@ -13,7 +13,7 @@ import {
   resetFormState,
 } from "../../utils/mainpage/mainSupabase";
 import MainAnswer from "./MainAnswer";
-import { NO_ANSWER } from "@/constants/mainpage/cardComment";
+import { I_CANT_UNDERSTAND, NO_ANSWER } from "@/constants/mainpage/cardComment";
 import { useRouter } from "next/navigation";
 
 const MainSearchBar = () => {
@@ -32,17 +32,16 @@ const MainSearchBar = () => {
   const router = useRouter();
   useEffect(() => {
     const checkUser = async () => {
-      const { data: sessionData } = await supabase.auth.getSession();
+      // const { data: sessionData } = await supabase.auth.getSession();
 
-      if (!sessionData.session) {
-        AlertError("로그인 세션이 없습니다.");
-        router.push("/login");
-        return;
-      }
+      // if (!sessionData.session) {
+      //   AlertError("로그인 세션이 없습니다.");
+      //   router.push("/login");
+      //   return;
+      // }
 
       const { data, error } = await supabase.auth.getUser();
       if (error) {
-        AlertError("유저 정보를 가져오는데 오류가 발생했습니다.");
       } else {
         setUser(data.user);
       }
@@ -127,7 +126,12 @@ const MainSearchBar = () => {
       setAnswer(data);
       resetForm();
 
-      if (data === NO_ANSWER) {
+      if (data === NO_ANSWER || data === I_CANT_UNDERSTAND) {
+        setLatestUserAnswer({
+          answer_text: question,
+          answer_answer: data,
+          answer_image: "",
+        });
         return; //답변을 생성하지 못하거나 문제를 인식하지 못한경우 함수를 종료 & answer로 비교할시 비동기 처리 문제 때문에 원하는결과를 얻지 못할수도있음
       }
 
