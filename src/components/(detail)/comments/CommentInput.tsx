@@ -11,7 +11,7 @@ const CommentInput = ({ answerId }: { answerId: string }) => {
   useEffect(() => {
     const fetchUser = async () => {
       const user = await getUserSession();
-      if (user) setUserId(user.id);
+      if (user) setUserId(user.user.id);
     };
 
     fetchUser();
