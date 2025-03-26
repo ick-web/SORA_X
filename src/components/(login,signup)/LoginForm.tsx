@@ -46,7 +46,12 @@ const LoginForm = () => {
 
   // 로그인 상태일때 로그인페이지로 가는 걸 막는 로직
   useEffect(() => {
-    if (user) {
+    if (!user) return; // user가 없을 때 실행하지 않음 (초기 렌더링 방지)
+
+    const isFirstRender = sessionStorage.getItem("firstRender"); // 첫 렌더링 여부 확인
+    if (!isFirstRender) {
+      sessionStorage.setItem("firstRender", "true"); // 첫 방문 기록
+    } else {
       AlertError("잘못된 접근입니다.");
       router.push("/");
     }
