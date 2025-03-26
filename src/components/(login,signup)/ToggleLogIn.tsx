@@ -3,13 +3,16 @@
 import { useAuthStore } from "@/stores/store";
 import { useRouter } from "next/navigation";
 import supabase from "@/app/supabase/client";
+import { useQueryClient } from "@tanstack/react-query";
 
 const ToggleLogIn = () => {
   const { user, logout } = useAuthStore();
   const router = useRouter();
+  const queryClient = useQueryClient();
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
+    queryClient.clear();
     logout(); // Zustand 상태 초기화
     router.push("/login"); // 로그인 페이지로 이동
   };
