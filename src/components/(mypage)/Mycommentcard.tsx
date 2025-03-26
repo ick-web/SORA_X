@@ -15,7 +15,7 @@ const Mycommentcard = (comment: Comment) => {
     >
       <div className="flex flex-row m-10 w-80% justify-center text-center">
         <div className="flex-1 ">
-          <div className="text-xl font-bold mb-5">
+          <div className=" font-bold mb-5 line-clamp-3">
             {comment.comment_content}
           </div>
           <div className="flex flex-row gap-3 justify-left ml-5">

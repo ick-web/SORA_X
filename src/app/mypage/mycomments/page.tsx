@@ -16,7 +16,6 @@ const Mycomments = () => {
 
   return (
     <div>
-      <div className="border-t border-color-black3 my-6" />
       <div className="flex flex-col  ">
         {data?.map((comment) => {
           return <Mycommentcard {...comment} key={comment.comment_id} />;
