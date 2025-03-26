@@ -1,34 +1,75 @@
 "use client";
 
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { fetchCommentById } from "@/utils/detail/fetchCommentById";
-import { getUserSession } from "@/utils/auth/getUserSession";
-import { Comment } from "@/types/commentTypes";
-import { useEffect, useState } from "react";
 import { updateComment } from "@/utils/detail/updateComment";
 import { deleteComment } from "@/utils/detail/deleteComment";
+import { getUserSession } from "@/utils/auth/getUserSession";
+import { useState, useEffect } from "react";
 import CommentInput from "./CommentInput";
 
 const CommentList = ({ answerId }: { answerId: string }) => {
-  const [comments, setComments] = useState<Comment[]>([]);
+  const queryClient = useQueryClient();
   const [userId, setUserId] = useState<string | null>(null);
   const [editCommentId, setEditCommentId] = useState<string | null>(null);
   const [editContent, setEditContent] = useState("");
 
-  // 댓글 목록 가져오기
+  // 🔹 유저 세션 가져오기
   useEffect(() => {
-    const getComments = async () => {
-      const fetchedComments = await fetchCommentById(answerId);
-      setComments(fetchedComments);
-    };
-    getComments();
-
     const fetchUser = async () => {
       const user = await getUserSession();
       if (user) setUserId(user.user.id);
     };
     fetchUser();
-  }, [answerId]);
+  }, []);
 
+  // 🔹 댓글 가져오기 (React Query)
+  const {
+    data: comments = [],
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["comments", answerId],
+    queryFn: () => fetchCommentById(answerId),
+  });
+
+  // 🔹 댓글 삭제 Mutation
+  const deleteMutation = useMutation({
+    mutationFn: deleteComment,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["comments"] }); // ✅ 삭제 후 데이터 갱신
+    },
+  });
+
+  // 🔹 댓글 수정 Mutation
+  const updateMutation = useMutation({
+    mutationFn: ({
+      commentId,
+      content,
+    }: {
+      commentId: string;
+      content: string;
+    }) => updateComment(commentId, content),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["comments"] }); // ✅ 수정 후 데이터 갱신
+      setEditCommentId(null);
+    },
+  });
+
+  // ✅ 댓글 삭제 핸들러
+  const handleDeleteComment = (commentId: string) => {
+    if (confirm("댓글을 삭제하시겠습니까?")) {
+      deleteMutation.mutate(commentId);
+    }
+  };
+
+  // ✅ 댓글 수정 핸들러
+  const handleEditComment = (commentId: string) => {
+    if (!editContent.trim()) return;
+    updateMutation.mutate({ commentId, content: editContent });
+  };
+
+  // ✅ 댓글 수정 모드 변경 시 인풋 값 초기화
   useEffect(() => {
     if (editCommentId) {
       const editingComment = comments.find(
@@ -38,35 +79,8 @@ const CommentList = ({ answerId }: { answerId: string }) => {
     }
   }, [editCommentId, comments]);
 
-  // 댓글 추가 핸들러
-  const handleAddComment = (newComment: Comment) => {
-    setComments((prev) => [newComment, ...prev]);
-  };
-
-  // 댓글 삭제 핸들러
-  const handleDeleteComment = async (commentId: string) => {
-    if (!confirm("댓글을 삭제하시겠습니까?")) return;
-    const success = await deleteComment(commentId);
-    if (success) {
-      setComments(comments.filter((c) => c.comment_id !== commentId));
-    }
-  };
-
-  // 댓글 수정 핸들러
-  const handleEditComment = async (commentId: string) => {
-    if (!editContent.trim()) return;
-    const success = await updateComment(commentId, editContent);
-    if (success) {
-      setComments(
-        comments.map((c) =>
-          c.comment_id === commentId
-            ? { ...c, comment_content: editContent }
-            : c
-        )
-      );
-      setEditCommentId(null);
-    }
-  };
+  if (isLoading) return <p>댓글을 불러오는 중...</p>;
+  if (isError) return <p>댓글을 불러오는 중 오류가 발생했습니다.</p>;
 
   return (
     <div>
@@ -78,7 +92,6 @@ const CommentList = ({ answerId }: { answerId: string }) => {
             key={comment.comment_id}
             className="border-2 border-color-orange2 rounded-lg p-4 mb-4"
           >
-            {/* ✅ 닉네임 + 작성 날짜 + 버튼 한 줄 정렬 */}
             <div className="flex items-center justify-between border-b border-color-black3 pb-4">
               <div>
                 <span className="font-bold">
@@ -126,7 +139,6 @@ const CommentList = ({ answerId }: { answerId: string }) => {
               )}
             </div>
 
-            {/* ✅ 댓글 내용 */}
             {editCommentId === comment.comment_id ? (
               <div className="mt-2">
                 <input
@@ -144,7 +156,12 @@ const CommentList = ({ answerId }: { answerId: string }) => {
         <p className="text-color-black2">아직 댓글이 없습니다.</p>
       )}
 
-      <CommentInput answerId={answerId} onAddComment={handleAddComment} />
+      <CommentInput
+        answerId={answerId}
+        onAddComment={() =>
+          queryClient.invalidateQueries({ queryKey: ["comments"] })
+        }
+      />
     </div>
   );
 };
