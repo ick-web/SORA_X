@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Header from "../components/Header";
 import { Open_Sans, Noto_Sans_KR } from "next/font/google";
+import ReactQueryProvider from "@/context/QueryClientProvider";
 // import Footer from "../components/Footer";
 
 // 영문 폰트
@@ -32,13 +33,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko">
+    <html lang="ko" className="overflow-hidden">
       <body
-        className={`${openSans.className} ${notoSansKR.className} antialiased flex`}
+        className={`${openSans.className} ${notoSansKR.className} antialiased h-screen flex flex-row`}
       >
-        <Header />
-        {children}
-        {/* <Footer /> */}
+        {/* 쿼리클라이언트 추가했습니다. */}
+        <ReactQueryProvider>
+          <Header />
+
+          <main className="overflow-y-auto flex-1">{children}</main>
+
+          {/* <Footer /> */}
+        </ReactQueryProvider>
       </body>
     </html>
   );

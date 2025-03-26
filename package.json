@@ -12,7 +12,9 @@
     "@react-icons/all-files": "^4.1.0",
     "@supabase/supabase-js": "^2.49.1",
     "@tanstack/react-query": "^5.69.0",
-    "framer-motion": "^12.6.0",
+
+    "framer-motion": "^12.5.0",
+
     "next": "14.2.18",
     "openai": "^4.88.0",
     "react": "^18",

@@ -1,6 +1,6 @@
 "use server";
 
-import supabase from "@/app/supabase/client";
+import { revalidateTag } from "next/cache";
 
 export type QuestionUsersResponse = {
   user_nickname: string;
@@ -13,19 +13,53 @@ export type CommentUsersResponse = {
 };
 
 export const fetchQuestionUsers = async (): Promise<QuestionUsersResponse[] | null> => {
-  const { data: questionUsers, error } = await supabase.rpc("get_users_by_answer_count");
-  if (error) {
-    console.error("질문을 한 유저정보를 불러오는 중 오류가 발생했습니다.", error);
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/rpc/get_users_by_answer_count`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        apikey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY as string,
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY}`,
+      },
+      next: { tags: ["questionUsers"] },
+    });
+
+    if (!response.ok) {
+      console.error("질문 유저 데이터를 가져오는 중 오류 발생", response.statusText);
+      return null;
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("fetchQuestionUsers 실패:", error);
     return null;
   }
-  return questionUsers;
 };
 
 export const fetchCommentUsers = async (): Promise<CommentUsersResponse[] | null> => {
-  const { data: commentUsers, error } = await supabase.rpc("get_users_by_comment_count");
-  if (error) {
-    console.error("댓글을 남긴 유저정보를 불러오는 중 오류가 발생했습니다.", error);
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/rpc/get_users_by_comment_count`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        apikey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY as string,
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY}`,
+      },
+      next: { tags: ["commentUsers"] },
+    });
+
+    if (!response.ok) {
+      console.error("댓글 유저 데이터를 가져오는 중 오류 발생", response.statusText);
+      return null;
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("fetchCommentUsers 실패:", error);
     return null;
   }
-  return commentUsers;
 };
+
+export async function refreshData() {
+  revalidateTag("questionUsers");
+}
