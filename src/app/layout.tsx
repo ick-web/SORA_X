@@ -42,7 +42,6 @@ export default function RootLayout({
           <Header />
 
           <main className="overflow-y-auto flex-1">{children}</main>
-
           {/* <Footer /> */}
         </ReactQueryProvider>
       </body>

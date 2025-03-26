@@ -1,7 +1,11 @@
 import { fetchAnswerById } from "@/utils/detail/fetchAnswerById";
 import Image from "next/image";
 
-const QuestionDetail = async ({answerId}: {answerId: string}) => {
+interface QuestionDetailProps {
+  answerId: string;
+}
+
+const QuestionDetail = async ({ answerId }: QuestionDetailProps) => {
   const data = await fetchAnswerById(answerId);
 
   if (!data) return <p>데이터를 불러오지 못했습니다.</p>;

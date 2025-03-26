@@ -4,7 +4,7 @@ import React from "react";
 const ContactPage = () => {
   return (
     <div className="wrapper w-full h-screen flex flex-col justify-center items-center overflow-hidden bg-color-black1">
-      <div className="border w-1/2 grid grid-cols-3">
+      <div className="border w-1/2 h-4/6 grid grid-cols-3">
         <div className="flex justify-start items-center text-center gap-2 mb-8">
           <Image
             src="/face-one.png"
