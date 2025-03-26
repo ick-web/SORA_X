@@ -14,8 +14,10 @@ const Mycard = (answer: Answer) => {
     >
       <div className="flex flex-row m-10 w-80% justify-center text-center">
         <div className="flex-1 m-1">
-          <div className="text-xl font-bold">{answer.answer_text}</div>
-          <div>{answer.answer_answer}</div>
+          <div className="text-xl font-bold line-clamp-1 ">
+            {answer.answer_text}
+          </div>
+          <div className="line-clamp-2">{answer.answer_answer}</div>
           <div className="flex flex-row gap-3 justify-left ml-5">
             <button className="border-2 border-color-orange1 rounded-l p-1">
               수정
