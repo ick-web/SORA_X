@@ -1,10 +1,17 @@
 "use client";
 
+import { Comment } from "@/types/commentTypes";
 import { getUserSession } from "@/utils/auth/getUserSession";
 import { addComment } from "@/utils/detail/addComment";
 import { useEffect, useState } from "react";
 
-const CommentInput = ({ answerId }: { answerId: string }) => {
+const CommentInput = ({
+  answerId,
+  onAddComment,
+}: {
+  answerId: string;
+  onAddComment: (newComment: Comment) => void;
+}) => {
   const [comment, setComment] = useState("");
   const [userId, setUserId] = useState<string | null>(null);
 
@@ -24,10 +31,11 @@ const CommentInput = ({ answerId }: { answerId: string }) => {
       return;
     }
 
-    const result = await addComment(answerId, userId, comment);
+    const newComment = await addComment(answerId, userId, comment);
 
-    if (result) {
+    if (newComment) {
       alert("댓글이 등록되었습니다!");
+      onAddComment(newComment);
       setComment("");
     } else {
       alert("댓글 등록에 실패했습니다.");
