@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation"; // ✅ useRouter 사용
+import { useRouter } from "next/navigation";
 import supabase from "../supabase/client";
 import { Answer } from "@/types/mainTypes";
 import { IoIosArrowForward } from "react-icons/io";
