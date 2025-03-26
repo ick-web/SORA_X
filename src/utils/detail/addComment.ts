@@ -18,9 +18,6 @@ export const addComment = async (
       .insert([newComment])
       .select();
 
-    console.log("data:", data);
-    console.log("error:", error);
-
     if (error) {
       throw error;
     }

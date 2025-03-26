@@ -92,7 +92,7 @@ const CommentList = ({ answerId }: { answerId: string }) => {
             key={comment.comment_id}
             className="border-2 border-color-orange2 rounded-lg p-4 mb-4"
           >
-            <div className="flex items-center justify-between border-b border-color-black3 pb-4">
+            <div className="flex items-center justify-between border-b border-color-black3 pb-2">
               <div>
                 <span className="font-bold">
                   {comment.users?.user_nickname || "익명"}
@@ -108,13 +108,13 @@ const CommentList = ({ answerId }: { answerId: string }) => {
                     <>
                       <button
                         onClick={() => handleEditComment(comment.comment_id)}
-                        className="px-3 py-1 bg-gray-700 rounded text-white"
+                        className="px-3 py-1 bg-color-black1 rounded text-white duration-300 hover:bg-color-black2"
                       >
                         저장
                       </button>
                       <button
                         onClick={() => setEditCommentId(null)}
-                        className="px-3 py-1 bg-gray-600 rounded text-white"
+                        className="px-3 py-1 bg-color-black2 rounded text-white duration-300 hover:bg-color-black1"
                       >
                         취소
                       </button>
@@ -123,13 +123,13 @@ const CommentList = ({ answerId }: { answerId: string }) => {
                     <>
                       <button
                         onClick={() => setEditCommentId(comment.comment_id)}
-                        className="px-3 py-1 border border-color-orange1 rounded text-white"
+                        className="px-3 py-1 border border-color-orange1 rounded text-white duration-300 hover:bg-color-orange1"
                       >
                         수정
                       </button>
                       <button
                         onClick={() => handleDeleteComment(comment.comment_id)}
-                        className="px-3 py-1 bg-color-orange1 rounded text-white"
+                        className="px-3 py-1 bg-color-orange1 rounded text-white duration-300 hover:bg-color-orange2"
                       >
                         삭제
                       </button>
