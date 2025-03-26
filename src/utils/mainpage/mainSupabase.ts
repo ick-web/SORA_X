@@ -1,5 +1,6 @@
 import supabase from "@/app/supabase/client";
 import { User } from "@supabase/supabase-js";
+import { AlertError } from "../alert";
 
 export const uploadImageToSupabase = async (
   file: File
@@ -55,12 +56,12 @@ export const getAnswerFromSupabase = async (user: User | null) => {
 
 export const validateImage = (file: File): boolean => {
   if (file.size > 5 * 1024 * 1024) {
-    alert("5MB 이하의 이미지만 업로드 가능합니다.");
+    AlertError("5MB 이하의 이미지만 업로드 가능합니다.");
     return false;
   }
 
   if (!file.type.startsWith("image/")) {
-    alert("이미지 파일만 업로드 가능합니다.");
+    AlertError("이미지 파일만 업로드 가능합니다.");
     return false;
   }
 

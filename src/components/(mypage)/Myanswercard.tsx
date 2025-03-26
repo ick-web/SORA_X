@@ -1,27 +1,12 @@
-import supabase from "@/app/supabase/client";
 import { Answer } from "@/types/mypageTypes";
+import { deleteanswer } from "@/utils/mypage/mypagedelete";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
 import { IoIosArrowForward } from "react-icons/io";
 
 const Mycard = (answer: Answer) => {
-  //
   const queryClient = useQueryClient();
-
-  const deleteanswer = async (answerId: string) => {
-    try {
-      const { error } = await supabase
-        .from("answers")
-        .delete()
-        .eq("answer_id", answerId);
-      if (error) throw error;
-      return true;
-    } catch (error) {
-      console.error("게시글 삭제 실패:", error);
-      return false;
-    }
-  };
 
   const deleteMutation = useMutation({
     mutationFn: deleteanswer,
@@ -35,7 +20,7 @@ const Mycard = (answer: Answer) => {
       deleteMutation.mutate(answerId);
     }
   };
-  //
+
   return (
     <div className="border border-color-black2 m-2 rounded-xl">
       <Link

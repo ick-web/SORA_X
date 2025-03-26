@@ -4,6 +4,7 @@ import MypageHeader from "@/components/(mypage)/mypageHeader";
 import { ReactNode, useEffect, useState } from "react";
 import supabase from "../supabase/client";
 import { RiEdit2Fill } from "react-icons/ri";
+import { useNicknameData } from "@/hooks/mypage/useUserData";
 
 const Layout = ({ children }: { children: ReactNode }) => {
   //수정state
@@ -18,36 +19,30 @@ const Layout = ({ children }: { children: ReactNode }) => {
     getUser();
   }, []);
 
-  useEffect(() => {
-    if (userid) {
-      getUserNickname(userid);
-    }
-  }, [userid]);
-
   const getUser = async () => {
     const { data, error } = await supabase.auth.getUser();
     if (error) {
       alert("사용자 정보를 가져오는 중 에러가 발생했습니다.");
     } else {
       setUserid(data.user.id);
-      getUserNickname(userid);
     }
   };
 
-  const getUserNickname = async (userId: string) => {
-    const { data, error } = await supabase
-      .from("users")
-      .select("user_nickname")
-      .eq("user_id", userId)
-      .single(); // 단일 데이터 조회
-    if (error) {
-      console.error("유저 닉네임 조회 에러:", error.message);
-      return null;
-    }
-    setNickname(data?.user_nickname);
-  };
+  const { data: nickname, isPending, isError } = useNicknameData(userid);
+  if (isError) {
+    <div>오류!!</div>;
+  }
+  if (isPending) {
+    <div>가져오고 있어요~</div>;
+  }
 
-  //중복 확인//타입 넣기
+  useEffect(() => {
+    if (nickname) {
+      setNickname(nickname);
+    }
+  }, [nickname]);
+
+  //중복확인
   const checkNickname = async () => {
     if (newNickName === "") {
       alert("닉네임을 입력해주세요!");
