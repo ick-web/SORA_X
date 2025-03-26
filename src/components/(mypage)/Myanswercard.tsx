@@ -16,7 +16,7 @@ const Mycard = (answer: Answer) => {
     },
   });
 
-  const handleDelte = async (answerId: string) => {
+  const handleDelete = async (answerId: string) => {
     const isConfirmed = await AlertCheck(
       "게시글 삭제",
       "정말로 이 게시글을 삭제하시겠습니까?",
@@ -59,7 +59,7 @@ const Mycard = (answer: Answer) => {
       <button
         className="border-2 border-color-orange1 bg-color-orange1 rounded p-1 mb-3 ml-3"
         onClick={() => {
-          handleDelte(answer.answer_id);
+          handleDelete(answer.answer_id);
         }}
       >
         삭제

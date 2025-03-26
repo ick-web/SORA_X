@@ -1,6 +1,7 @@
 "use client";
 
 import { Comment } from "@/types/commentTypes";
+import { AlertError, AlertSuccess } from "@/utils/alert";
 import { getUserSession } from "@/utils/auth/getUserSession";
 import { addComment } from "@/utils/detail/addComment";
 import { useEffect, useState } from "react";
@@ -27,18 +28,21 @@ const CommentInput = ({
   const handleAddComment = async () => {
     if (!comment) return;
     if (!userId) {
-      alert("로그인이 필요합니다.");
+      // alert("로그인이 필요합니다.");
+      AlertError("로그인 필요", "로그인이 필요합니다.");
       return;
     }
 
     const newComment = await addComment(answerId, userId, comment);
 
     if (newComment) {
-      alert("댓글이 등록되었습니다!");
+      // alert("댓글이 등록되었습니다!");
+      AlertSuccess("성공", "댓글이 등록되었습니다!")
       onAddComment(newComment);
       setComment("");
     } else {
-      alert("댓글 등록에 실패했습니다.");
+      // alert("댓글 등록에 실패했습니다.");
+      AlertError("실패", "댓글 등록에 실패했습니다.")
     }
   };
 
