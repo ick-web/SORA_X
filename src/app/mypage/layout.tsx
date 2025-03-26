@@ -4,29 +4,21 @@ import MypageHeader from "@/components/(mypage)/mypageHeader";
 import { ReactNode, useEffect, useState } from "react";
 import supabase from "../supabase/client";
 import { RiEdit2Fill } from "react-icons/ri";
-import { useNicknameData } from "@/hooks/mypage/useUserData";
+import { useNicknameData, useUserData } from "@/hooks/mypage/useUserData";
 
 const Layout = ({ children }: { children: ReactNode }) => {
   //수정state
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [newNickName, setNewNickName] = useState<string>("");
   const [canChange, setCanChange] = useState<boolean>(false);
-
-  const [userid, setUserid] = useState<string>("");
+  //유저 정보 state
   const [usernickname, setNickname] = useState<string>("");
 
-  useEffect(() => {
-    getUser();
-  }, []);
-
-  const getUser = async () => {
-    const { data, error } = await supabase.auth.getUser();
-    if (error) {
-      alert("사용자 정보를 가져오는 중 에러가 발생했습니다.");
-    } else {
-      setUserid(data.user.id);
-    }
-  };
+  const {
+    data: userid,
+    isPending: isUserPending,
+    isError: isUserError,
+  } = useUserData();
 
   const { data: nickname, isPending, isError } = useNicknameData(userid);
   if (isError) {
@@ -41,6 +33,9 @@ const Layout = ({ children }: { children: ReactNode }) => {
       setNickname(nickname);
     }
   }, [nickname]);
+
+  if (isUserPending) return <p>유저 정보 로딩 중...</p>;
+  if (isUserError || !userid) return <p>유저 정보를 불러오는 중 오류 발생</p>;
 
   //중복확인
   const checkNickname = async () => {
@@ -130,7 +125,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
           <div className="bg-color-black3 m-8 py-10 text-xl text-white rounded-xl">
             <div className="pl-5 flex flex-row">
               <p className="text-color-orange1 font-bold pr-1">
-                {usernickname}님
+                {usernickname ? usernickname : "??"}님
               </p>
               의 질문과 답변을 모아보고 복습해보세요!
             </div>

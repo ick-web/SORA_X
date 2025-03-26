@@ -70,7 +70,7 @@ export const useUserData = () => {
 };
 
 //유저 닉네임
-const getUserNickname = async (userId: string) => {
+const getUserNickname = async (userId: string | undefined) => {
   const { data, error } = await supabase
     .from("users")
     .select("user_nickname")
@@ -83,10 +83,12 @@ const getUserNickname = async (userId: string) => {
   return data?.user_nickname;
 };
 
-export const useNicknameData = (userId: string) => {
+export const useNicknameData = (userId: string | undefined, options = {}) => {
   return useQuery({
     queryKey: ["nickname", userId],
     queryFn: () => getUserNickname(userId),
     staleTime: 1000 * 60 * 5, // 5분 동안 캐싱 유지
+    enabled: !!userId, // userId가 없으면 실행 안 함
+    ...options, // 추가 옵션 허용
   });
 };
