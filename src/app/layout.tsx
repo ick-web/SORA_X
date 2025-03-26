@@ -20,6 +20,7 @@ const notoSansKR = Noto_Sans_KR({
   display: "swap",
 });
 
+//루트 메타데이터
 export const metadata: Metadata = {
   title: "SORA_X",
   description:
@@ -39,6 +40,7 @@ export default function RootLayout({
         {/* 쿼리클라이언트 추가했습니다. */}
         <ReactQueryProvider>
           <Header />
+
           <main className="overflow-y-auto flex-1">{children}</main>
           {/* <Footer /> */}
         </ReactQueryProvider>
