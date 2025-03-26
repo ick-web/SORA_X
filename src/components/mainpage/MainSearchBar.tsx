@@ -9,7 +9,6 @@ import supabase from "@/app/supabase/client";
 import { User } from "@supabase/supabase-js";
 import {
   uploadImageToSupabase,
-  getAnswerFromSupabase,
   validateImage,
   resetFormState,
 } from "../../utils/mainpage/mainSupabase";
