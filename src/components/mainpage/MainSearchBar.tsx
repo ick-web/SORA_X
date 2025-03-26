@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import { useState, ChangeEvent, FormEvent, useRef, useEffect } from "react";
-
+import { AlertError } from "../../utils/alert";
 import MainImagePreview from "./MainImagePreview";
 import MainFileUploader from "./MainFileUploader";
 
@@ -9,12 +9,12 @@ import supabase from "@/app/supabase/client";
 import { User } from "@supabase/supabase-js";
 import {
   uploadImageToSupabase,
-  getAnswerFromSupabase,
   validateImage,
   resetFormState,
 } from "../../utils/mainpage/mainSupabase";
 import MainAnswer from "./MainAnswer";
 import { NO_ANSWER } from "@/constants/mainpage/cardComment";
+import { useRouter } from "next/navigation";
 
 const MainSearchBar = () => {
   const [question, setQuestion] = useState<string>(""); //폼 질문
@@ -29,34 +29,25 @@ const MainSearchBar = () => {
     answer_answer: string;
     answer_image: string | null;
   } | null>(null); //슈퍼베이스에서 가져온 답변 정보
+  const router = useRouter();
 
   useEffect(() => {
     const checkUser = async () => {
       const session = supabase.auth.getSession();
 
       if (!session) {
-        alert("로그인 세션이 없습니다.");
+        AlertError("로그인 세션이 없습니다.");
+        if (typeof window !== "undefined") {
+          router.push("/login");
+        }
         return;
       }
 
       const { data, error } = await supabase.auth.getUser();
       if (error) {
-        alert("사용자 정보를 가져오는 중 에러가 발생했습니다.");
+        AlertError("유저 정보를 가져오는데 오류가 발생했습니다.");
       } else {
         setUser(data.user);
-      }
-    }; //유저 로그인 여부를 확인하는 부분 추후에 대체 예정
-
-    const fetchLatestAnswer = async () => {
-      if (user) {
-        const data = await getAnswerFromSupabase(user);
-        if (data) {
-          setLatestUserAnswer({
-            answer_text: data.answer_text,
-            answer_answer: data.answer_answer,
-            answer_image: data.answer_image,
-          });
-        }
       }
     };
 
@@ -65,8 +56,9 @@ const MainSearchBar = () => {
     }
 
     checkUser();
-    fetchLatestAnswer();
-  }, [user, answer]);
+
+  }, [router]);
+
 
   const handleQuestionChange = (e: ChangeEvent<HTMLInputElement>) => {
     setQuestion(e.target.value);
@@ -108,7 +100,9 @@ const MainSearchBar = () => {
       if (fileInputRef.current?.files?.[0]) {
         imageUrl = await uploadImageToSupabase(fileInputRef.current.files[0]);
         if (!imageUrl) {
-          alert("이미지 업로드에 실패했습니다. 다시 시도해주세요.");
+          AlertError(
+            "이미지 업로드 중에 문제가 발생했습니다. 다시 시도해주세요"
+          );
           setIsLoading(false);
           return;
         }
@@ -147,6 +141,12 @@ const MainSearchBar = () => {
       if (error) {
         console.error("데이터 저장 실패:", error);
       }
+
+      setLatestUserAnswer({
+        answer_text: question,
+        answer_answer: data,
+        answer_image: imageUrl,
+      });
     } catch (error) {
       console.error("오류 발생:", error);
       setAnswer("죄송합니다. 답변을 생성하는 중 오류가 발생했습니다.");
