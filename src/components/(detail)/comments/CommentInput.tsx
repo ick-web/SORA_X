@@ -42,8 +42,13 @@ const CommentInput = ({
     }
   };
 
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    handleAddComment();
+  }
+
   return (
-    <div className="mt-4 flex items-center">
+    <form onSubmit={handleSubmit} className="mt-4 flex items-center">
       <input
         className="w-full p-2 bg-color-black2 rounded text-white"
         placeholder="댓글을 입력하세요..."
@@ -51,12 +56,12 @@ const CommentInput = ({
         onChange={(e) => setComment(e.target.value)}
       />
       <button
+        type="submit"
         className="w-20 ml-2 px-4 py-2 bg-color-orange1 rounded duration-300 hover:bg-color-orange2"
-        onClick={handleAddComment}
       >
         등록
       </button>
-    </div>
+    </form>
   );
 };
 
