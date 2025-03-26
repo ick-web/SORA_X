@@ -11,7 +11,6 @@ const CommunityPage = () => {
   const [answers, setAnswers] = useState<Answer[]>([]);
   const [error, setError] = useState<string | null>(null);
 
-  // 🔹 비동기 데이터 로드 함수
   useEffect(() => {
     const fetchAnswers = async () => {
       const { data, error } = await supabase

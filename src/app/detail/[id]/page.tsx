@@ -7,7 +7,6 @@ type DetailPageProps = {
 };
 
 const DetailPage = ({ params }: DetailPageProps) => {
-  // const answerId = "bafb482a-b5f6-43ea-af90-254941ecb660"; // 임시로 answer_id 넣음
   const { id } = params;
 
   return (
