@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation"; // ✅ useRouter 사용
 import supabase from "../supabase/client";
 import { Answer } from "@/types/mainTypes";
@@ -21,7 +21,6 @@ const CommunityPage = () => {
 
       if (error) {
         setError("데이터 불러오기에 실패했습니다.");
-        console.log("supabase error", error);
       } else {
         setAnswers(data || []);
       }
@@ -47,7 +46,7 @@ const CommunityPage = () => {
 
         {/* 질문 리스트 */}
         <div className="w-full max-h-[600px] overflow-y-auto space-y-6">
-          {answers.map((item) => (
+          {answers?.map((item: Answer) => (
             <div
               key={item.answer_id}
               onClick={() => router.push(`/detail/${item.answer_id}`)} // ✅ 클릭 시 이동
