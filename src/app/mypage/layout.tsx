@@ -1,9 +1,10 @@
 "use client";
 
 import MypageHeader from "@/components/(mypage)/mypageHeader";
-import { ReactNode, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import supabase from "../supabase/client";
 import { RiEdit2Fill } from "react-icons/ri";
+import { useNicknameData } from "@/hooks/mypage/useUserData";
 
 const Layout = ({ children }: { children: ReactNode }) => {
   //수정state
@@ -11,13 +12,37 @@ const Layout = ({ children }: { children: ReactNode }) => {
   const [newNickName, setNewNickName] = useState<string>("");
   const [canChange, setCanChange] = useState<boolean>(false);
 
-  //주스탄드 쓸 예정
-  const user = {
-    id: "6945ddb3-1281-4b59-b16c-f238709e37a9",
-    nickname: "수수수",
+  const [userid, setUserid] = useState<string>("");
+  const [usernickname, setNickname] = useState<string>("");
+
+  useEffect(() => {
+    getUser();
+  }, []);
+
+  const getUser = async () => {
+    const { data, error } = await supabase.auth.getUser();
+    if (error) {
+      alert("사용자 정보를 가져오는 중 에러가 발생했습니다.");
+    } else {
+      setUserid(data.user.id);
+    }
   };
 
-  //중복 확인//타입 넣기
+  const { data: nickname, isPending, isError } = useNicknameData(userid);
+  if (isError) {
+    <div>오류!!</div>;
+  }
+  if (isPending) {
+    <div>가져오고 있어요~</div>;
+  }
+
+  useEffect(() => {
+    if (nickname) {
+      setNickname(nickname);
+    }
+  }, [nickname]);
+
+  //중복확인
   const checkNickname = async () => {
     if (newNickName === "") {
       alert("닉네임을 입력해주세요!");
@@ -45,16 +70,15 @@ const Layout = ({ children }: { children: ReactNode }) => {
   const changeNickname = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (canChange) {
-      const { data, error } = await supabase
+      const { error } = await supabase
         .from("users")
         .update({ user_nickname: newNickName })
-        .eq("user_id", user.id);
+        .eq("user_id", userid);
       if (error) {
         alert(`${error}`);
       } else {
-        //alert(" " + data[0]);
         alert("추가되었습니다");
-        console.log(data);
+        setNickname(newNickName);
       }
     } else {
       alert("중복검사를 먼저 해주세요!");
@@ -106,13 +130,12 @@ const Layout = ({ children }: { children: ReactNode }) => {
           <div className="bg-color-black3 m-8 py-10 text-xl text-white rounded-xl">
             <div className="pl-5 flex flex-row">
               <p className="text-color-orange1 font-bold pr-1">
-                {user.nickname}님
+                {usernickname}님
               </p>
               의 질문과 답변을 모아보고 복습해보세요!
             </div>
           </div>
           <MypageHeader />
-          <div className="border-t border-color-black3 my-6 " />
         </div>
         <div className="flex-1  overflow-y-auto ">{children}</div>
       </div>

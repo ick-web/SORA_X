@@ -14,3 +14,10 @@ export type Answer = {
   answer_answer: string;
   answer_user_id: string;
 };
+
+export type User = {
+  user_id: string;
+  user_created_at: string;
+  user_nickname: string;
+  user_email: string;
+};

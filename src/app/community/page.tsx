@@ -1,19 +1,33 @@
-import React from "react";
+"use client";
+
+import { useEffect, useState } from "react";
 import supabase from "../supabase/client";
 import { Answer } from "@/types/mainTypes";
 import { IoIosArrowForward } from "react-icons/io";
 import Link from "next/link";
 
-const CommunityPage = async () => {
-  const { data: answers, error } = await supabase
-    .from("answers")
-    .select("*, user: users (user_id, user_nickname)")
-    .order("answer_created_at", { ascending: false });
+const CommunityPage = () => {
+  const [answers, setAnswers] = useState<Answer[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
-  if (error) {
-    console.log("supabase error", error);
-    return <div>데이터 불러오기에 실패했습니다.</div>;
-  }
+  useEffect(() => {
+    const fetchAnswers = async () => {
+      const { data, error } = await supabase
+        .from("answers")
+        .select("*, user: users (user_id, user_nickname)")
+        .order("answer_created_at", { ascending: false });
+
+      if (error) {
+        setError("데이터 불러오기에 실패했습니다.");
+      } else {
+        setAnswers(data || []);
+      }
+    };
+
+    fetchAnswers();
+  }, []);
+
+  if (error) return <div>{error}</div>;
 
   return (
     <div className="wrapper w-full h-screen overflow-hidden bg-color-black1">
@@ -36,7 +50,7 @@ const CommunityPage = async () => {
                 {/* 닉네임 + 날짜 */}
                 <div className="w-full flex justify-between items-center mb-2">
                   <span className="text-md text-color-orange2 font-semibold">
-                    🧩 {item.user?.user_nickname || "익명"}
+                    🧩 {item.user?.user_nickname ?? "익명"}
                   </span>
                   <span className="text-sm text-color-black4">
                     {new Date(item.answer_created_at).toLocaleString()}
