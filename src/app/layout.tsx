@@ -20,6 +20,7 @@ const notoSansKR = Noto_Sans_KR({
   display: "swap",
 });
 
+//루트 메타데이터
 export const metadata: Metadata = {
   title: "SORA_X",
   description:
