@@ -5,10 +5,10 @@ import Link from "next/link";
 import { AiFillHome } from "react-icons/ai";
 import { CiCirclePlus } from "react-icons/ci";
 import { FaBookmark } from "react-icons/fa";
-import { RiInbox2Fill } from "react-icons/ri";
 import { HiMiniTrophy } from "react-icons/hi2";
 import { GiSpiralShell } from "react-icons/gi";
 import ToggleLogIn from "./(login,signup)/ToggleLogIn";
+import ToggleMypage from "./(mypage)/ToggleMypage";
 
 const Header = () => {
   return (
@@ -47,13 +47,7 @@ const Header = () => {
                   <FaBookmark className="text-2xl" />
                   질문의 광장
                 </Link>
-                <Link
-                  href="/mypage"
-                  className="flex justify-start items-center text-center text-md font-medium text-neutral-200 gap-2 transition-all duration-300 hover:text-color-orange2"
-                >
-                  <RiInbox2Fill className="text-2xl" />
-                  마이페이지
-                </Link>
+                <ToggleMypage />
                 <Link
                   href="/ranking"
                   className="flex justify-start items-center text-center text-md font-medium text-neutral-200 gap-2 transition-all duration-300 hover:text-color-orange2"
