@@ -6,6 +6,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import Link from "next/link";
 import supabase from "@/app/supabase/client";
 import { useAuthStore } from "@/stores/store";
+import { AlertError } from "@/utils/alert";
 
 interface LoginFormData {
   email: string;
@@ -42,14 +43,14 @@ const LoginForm = () => {
       return;
     }
   };
-  
+
   // 로그인 상태일때 로그인페이지로 가는 걸 막는 로직
   useEffect(() => {
     if (user) {
-      alert("잘못된 접근입니다.");
+      AlertError("잘못된 접근입니다.");
       router.push("/");
     }
-  }, []);
+  }, [router, user]);
 
   return (
     <div className="w-[400px] bg-neutral-800 text-white p-8 rounded-lg shadow-lg">
