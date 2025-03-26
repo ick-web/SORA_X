@@ -36,7 +36,7 @@ const CommentList = ({ answerId }: { answerId: string }) => {
       );
       setEditContent(editingComment ? editingComment.comment_content : "");
     }
-  }, [editCommentId]);
+  }, [editCommentId, comments]);
 
   // 댓글 추가 핸들러
   const handleAddComment = (newComment: Comment) => {
