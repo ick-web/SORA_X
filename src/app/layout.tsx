@@ -39,7 +39,9 @@ export default function RootLayout({
         {/* 쿼리클라이언트 추가했습니다. */}
         <ReactQueryProvider>
           <Header />
-          <main className="overflow-y-auto flex-1 p-3">{children}</main>
+
+          <main className="overflow-y-auto flex-1">{children}</main>
+
           {/* <Footer /> */}
         </ReactQueryProvider>
       </body>
