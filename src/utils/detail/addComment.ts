@@ -15,7 +15,8 @@ export const addComment = async (
 
     const { data, error } = await supabase
       .from("comments")
-      .insert([newComment]);
+      .insert([newComment])
+      .select();
 
     console.log("data:", data);
     console.log("error:", error);
@@ -24,7 +25,7 @@ export const addComment = async (
       throw error;
     }
 
-    return data;
+    return data ? data[0] : null;
   } catch (error) {
     console.error(error);
     return null;
