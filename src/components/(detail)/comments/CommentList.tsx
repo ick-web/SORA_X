@@ -10,7 +10,6 @@ import CommentInput from "./CommentInput";
 
 const CommentList = ({ answerId }: { answerId: string }) => {
   const [comments, setComments] = useState<Comment[]>([]);
-  // const [comment, setComment] = useState("");
   const [userId, setUserId] = useState<string | null>(null);
   const [editCommentId, setEditCommentId] = useState<string | null>(null);
   const [editContent, setEditContent] = useState("");
@@ -29,6 +28,15 @@ const CommentList = ({ answerId }: { answerId: string }) => {
     };
     fetchUser();
   }, [answerId]);
+
+  useEffect(() => {
+    if (editCommentId) {
+      const editingComment = comments.find(
+        (c) => c.comment_id === editCommentId
+      );
+      setEditContent(editingComment ? editingComment.comment_content : "");
+    }
+  }, [editCommentId]);
 
   // 댓글 추가 핸들러
   const handleAddComment = (newComment: Comment) => {
@@ -70,13 +78,55 @@ const CommentList = ({ answerId }: { answerId: string }) => {
             key={comment.comment_id}
             className="border-2 border-color-orange2 rounded-lg p-4 mb-4"
           >
-            <span className="font-bold">
-              {comment.users?.user_nickname || "익명"}
-            </span>
-            <span className="ml-2 text-color-black3 text-sm">
-              {new Date(comment.comment_created_at).toLocaleString()}
-            </span>
+            {/* ✅ 닉네임 + 작성 날짜 + 버튼 한 줄 정렬 */}
+            <div className="flex items-center justify-between border-b border-color-black3 pb-4">
+              <div>
+                <span className="font-bold">
+                  {comment.users?.user_nickname || "익명"}
+                </span>
+                <span className="ml-2 text-color-black3 text-sm">
+                  {new Date(comment.comment_created_at).toLocaleString()}
+                </span>
+              </div>
 
+              {userId === comment.comment_user_id && (
+                <div className="flex gap-2">
+                  {editCommentId === comment.comment_id ? (
+                    <>
+                      <button
+                        onClick={() => handleEditComment(comment.comment_id)}
+                        className="px-3 py-1 bg-gray-700 rounded text-white"
+                      >
+                        저장
+                      </button>
+                      <button
+                        onClick={() => setEditCommentId(null)}
+                        className="px-3 py-1 bg-gray-600 rounded text-white"
+                      >
+                        취소
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      <button
+                        onClick={() => setEditCommentId(comment.comment_id)}
+                        className="px-3 py-1 border border-color-orange1 rounded text-white"
+                      >
+                        수정
+                      </button>
+                      <button
+                        onClick={() => handleDeleteComment(comment.comment_id)}
+                        className="px-3 py-1 bg-color-orange1 rounded text-white"
+                      >
+                        삭제
+                      </button>
+                    </>
+                  )}
+                </div>
+              )}
+            </div>
+
+            {/* ✅ 댓글 내용 */}
             {editCommentId === comment.comment_id ? (
               <div className="mt-2">
                 <input
@@ -84,32 +134,9 @@ const CommentList = ({ answerId }: { answerId: string }) => {
                   onChange={(e) => setEditContent(e.target.value)}
                   className="w-full p-2 border bg-color-black2 rounded"
                 />
-                <button
-                  onClick={() => handleEditComment(comment.comment_id)}
-                  className="ml-2"
-                >
-                  저장
-                </button>
-                <button onClick={() => setEditCommentId(null)} className="ml-2">
-                  취소
-                </button>
               </div>
             ) : (
               <p className="mt-2">{comment.comment_content}</p>
-            )}
-
-            {userId === comment.comment_user_id && (
-              <div className="mt-2">
-                <button onClick={() => setEditCommentId(comment.comment_id)}>
-                  수정
-                </button>
-                <button
-                  onClick={() => handleDeleteComment(comment.comment_id)}
-                  className="ml-2"
-                >
-                  삭제
-                </button>
-              </div>
             )}
           </div>
         ))
