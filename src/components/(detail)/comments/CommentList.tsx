@@ -14,7 +14,7 @@ const CommentList = ({ answerId }: { answerId: string }) => {
   const [editCommentId, setEditCommentId] = useState<string | null>(null);
   const [editContent, setEditContent] = useState("");
 
-  // 🔹 유저 세션 가져오기
+  // 유저 세션 가져오기
   useEffect(() => {
     const fetchUser = async () => {
       const user = await getUserSession();
@@ -23,7 +23,7 @@ const CommentList = ({ answerId }: { answerId: string }) => {
     fetchUser();
   }, []);
 
-  // 🔹 댓글 가져오기 (React Query)
+  // 댓글 가져오기
   const {
     data: comments = [],
     isLoading,
@@ -33,15 +33,15 @@ const CommentList = ({ answerId }: { answerId: string }) => {
     queryFn: () => fetchCommentById(answerId),
   });
 
-  // 🔹 댓글 삭제 Mutation
+  // 댓글 삭제 Mutation
   const deleteMutation = useMutation({
     mutationFn: deleteComment,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["comments"] }); // ✅ 삭제 후 데이터 갱신
+      queryClient.invalidateQueries({ queryKey: ["comments"] });
     },
   });
 
-  // 🔹 댓글 수정 Mutation
+  // 댓글 수정 Mutation
   const updateMutation = useMutation({
     mutationFn: ({
       commentId,
@@ -51,25 +51,25 @@ const CommentList = ({ answerId }: { answerId: string }) => {
       content: string;
     }) => updateComment(commentId, content),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["comments"] }); // ✅ 수정 후 데이터 갱신
+      queryClient.invalidateQueries({ queryKey: ["comments"] });
       setEditCommentId(null);
     },
   });
 
-  // ✅ 댓글 삭제 핸들러
+  // 댓글 삭제 핸들러
   const handleDeleteComment = (commentId: string) => {
     if (confirm("댓글을 삭제하시겠습니까?")) {
       deleteMutation.mutate(commentId);
     }
   };
 
-  // ✅ 댓글 수정 핸들러
+  // 댓글 수정 핸들러
   const handleEditComment = (commentId: string) => {
     if (!editContent.trim()) return;
     updateMutation.mutate({ commentId, content: editContent });
   };
 
-  // ✅ 댓글 수정 모드 변경 시 인풋 값 초기화
+  // 댓글 수정 모드 변경 시 인풋 값 초기화
   useEffect(() => {
     if (editCommentId) {
       const editingComment = comments.find(

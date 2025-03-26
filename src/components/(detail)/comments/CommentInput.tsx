@@ -53,7 +53,6 @@ const CommentInput = ({
       <button
         className="w-20 ml-2 px-4 py-2 bg-color-orange1 rounded"
         onClick={handleAddComment}
-        disabled={!userId}
       >
         등록
       </button>
