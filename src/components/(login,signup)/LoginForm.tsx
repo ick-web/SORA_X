@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import Link from "next/link";
 import supabase from "@/app/supabase/client";
@@ -15,7 +15,7 @@ interface LoginFormData {
 
 const LoginForm = () => {
   const router = useRouter();
-  const { user, setUser } = useAuthStore();
+  const { setUser } = useAuthStore();
   const [error, setError] = useState<string | null>(null); //서버 오류 저장
 
   const {
