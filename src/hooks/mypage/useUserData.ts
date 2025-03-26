@@ -11,7 +11,8 @@ const getuserpost = async (userid: string | undefined) => {
   const { data, error } = await supabase
     .from(SUPABASE_TABLE_NAME.ANSWER)
     .select(`*`)
-    .eq("answer_user_id", userid);
+    .eq("answer_user_id", userid)
+    .order("answer_created_at", { ascending: false });
   if (error) {
     throw error;
   }
@@ -34,7 +35,8 @@ const getusercomment = async (userid: string | undefined) => {
   const { data, error } = await supabase
     .from(SUPABASE_TABLE_NAME.COMMENTS)
     .select(`*`)
-    .eq("comment_user_id", userid);
+    .eq("comment_user_id", userid)
+    .order("comment_created_at", { ascending: false });
   if (error) {
     throw error;
   }
