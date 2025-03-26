@@ -11,8 +11,7 @@ export const fetchAnswerById = async (answerId: string) => {
     if (error) throw error;
 
     return data;
-  } catch (error) {
-    console.error(error);
+  } catch (_error) {
     return;
   }
 };

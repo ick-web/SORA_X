@@ -1,18 +1,36 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation"; // ✅ useRouter 사용
 import supabase from "../supabase/client";
 import { Answer } from "@/types/mainTypes";
 import { IoIosArrowForward } from "react-icons/io";
 
-const CommunityPage = async () => {
-  const { data: answers, error } = await supabase
-    .from("answers")
-    .select("*, user: users (user_id, user_nickname)")
-    .order("answer_created_at", { ascending: false });
+const CommunityPage = () => {
+  const router = useRouter();
+  const [answers, setAnswers] = useState<Answer[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
-  if (error) {
-    console.log("supabase error", error);
-    return <div>데이터 불러오기에 실패했습니다.</div>;
-  }
+  // 🔹 비동기 데이터 로드 함수
+  useEffect(() => {
+    const fetchAnswers = async () => {
+      const { data, error } = await supabase
+        .from("answers")
+        .select("*, user: users (user_id, user_nickname)")
+        .order("answer_created_at", { ascending: false });
+
+      if (error) {
+        setError("데이터 불러오기에 실패했습니다.");
+        console.log("supabase error", error);
+      } else {
+        setAnswers(data || []);
+      }
+    };
+
+    fetchAnswers();
+  }, []);
+
+  if (error) return <div>{error}</div>;
 
   return (
     <div className="wrapper w-full h-screen overflow-hidden bg-color-black1">
@@ -27,12 +45,13 @@ const CommunityPage = async () => {
           </h2>
         </div>
 
-        {/* 질문리스트 */}
+        {/* 질문 리스트 */}
         <div className="w-full max-h-[600px] overflow-y-auto space-y-6">
-          {answers?.map((item: Answer) => (
+          {answers.map((item) => (
             <div
               key={item.answer_id}
-              className="w-full h-40 overflow-y-hidden bg-color-black1 text-white text-justify text-md rounded-lg"
+              onClick={() => router.push(`/detail/${item.answer_id}`)} // ✅ 클릭 시 이동
+              className="w-full h-40 overflow-y-hidden bg-color-black1 text-white text-justify text-md rounded-lg cursor-pointer hover:bg-color-black2 transition"
             >
               {/* 닉네임 + 날짜 */}
               <div className="w-full flex justify-between items-center mb-2">

@@ -18,16 +18,12 @@ export const addComment = async (
       .insert([newComment])
       .select();
 
-    console.log("data:", data);
-    console.log("error:", error);
-
     if (error) {
       throw error;
     }
 
     return data ? data[0] : null;
-  } catch (error) {
-    console.error(error);
+  } catch (_error) {
     return null;
   }
 };
