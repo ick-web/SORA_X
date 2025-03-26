@@ -7,6 +7,7 @@ import { deleteComment } from "@/utils/detail/deleteComment";
 import { getUserSession } from "@/utils/auth/getUserSession";
 import { useState, useEffect } from "react";
 import CommentInput from "./CommentInput";
+import { AlertCheck } from "@/utils/alert";
 
 const CommentList = ({ answerId }: { answerId: string }) => {
   const queryClient = useQueryClient();
@@ -26,7 +27,7 @@ const CommentList = ({ answerId }: { answerId: string }) => {
   // 댓글 가져오기
   const {
     data: comments = [],
-    isLoading,
+    isPending,
     isError,
   } = useQuery({
     queryKey: ["comments", answerId],
@@ -57,8 +58,13 @@ const CommentList = ({ answerId }: { answerId: string }) => {
   });
 
   // 댓글 삭제 핸들러
-  const handleDeleteComment = (commentId: string) => {
-    if (confirm("댓글을 삭제하시겠습니까?")) {
+  const handleDeleteComment = async (commentId: string) => {
+    const isConfirmed = await AlertCheck(
+      "댓글 삭제",
+      "정말로 삭제하시겠습니까?",
+      "삭제"
+    );
+    if (isConfirmed) {
       deleteMutation.mutate(commentId);
     }
   };
@@ -79,7 +85,7 @@ const CommentList = ({ answerId }: { answerId: string }) => {
     }
   }, [editCommentId, comments]);
 
-  if (isLoading) return <p>댓글을 불러오는 중...</p>;
+  if (isPending) return <p>댓글을 불러오는 중...</p>;
   if (isError) return <p>댓글을 불러오는 중 오류가 발생했습니다.</p>;
 
   return (

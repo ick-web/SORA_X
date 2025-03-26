@@ -31,15 +31,7 @@ const Mycommentcard = (comment: Comment) => {
   //
   return (
     <div className="border border-color-black2 m-2 rounded-xl">
-      <Link
-        href={{
-          pathname: "/detail",
-          query: {
-            answer_id: comment.comment_answer_id,
-            comment_id: comment.comment_id,
-          },
-        }}
-      >
+      <Link href={`/detail/${comment.comment_answer_id}`}>
         <div className="flex flex-row mx-10 my-3 justify-center text-center">
           <div className="flex-1 ">
             <div className=" font-bold mb-5 line-clamp-3">
