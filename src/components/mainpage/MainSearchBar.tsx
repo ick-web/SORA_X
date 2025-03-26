@@ -30,16 +30,13 @@ const MainSearchBar = () => {
     answer_image: string | null;
   } | null>(null); //슈퍼베이스에서 가져온 답변 정보
   const router = useRouter();
-
   useEffect(() => {
     const checkUser = async () => {
-      const session = supabase.auth.getSession();
+      const { data: sessionData } = await supabase.auth.getSession();
 
-      if (!session) {
+      if (!sessionData.session) {
         AlertError("로그인 세션이 없습니다.");
-        if (typeof window !== "undefined") {
-          router.push("/login");
-        }
+        router.push("/login");
         return;
       }
 
@@ -87,7 +84,7 @@ const MainSearchBar = () => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (user) {
+    if (!user) {
       AlertError("로그인 후 이용가능한 서비스 입니다");
       router.push("/login");
       return;
