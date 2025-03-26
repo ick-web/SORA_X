@@ -15,7 +15,7 @@ import {
 } from "../../utils/mainpage/mainSupabase";
 import MainAnswer from "./MainAnswer";
 import { NO_ANSWER } from "@/constants/mainpage/cardComment";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 const MainSearchBar = () => {
   const [question, setQuestion] = useState<string>(""); //폼 질문
@@ -38,7 +38,9 @@ const MainSearchBar = () => {
 
       if (!session) {
         AlertError("로그인 세션이 없습니다.");
-        router.push("/login");
+        if (typeof window !== "undefined") {
+          router.push("/login");
+        }
         return;
       }
 
@@ -50,26 +52,12 @@ const MainSearchBar = () => {
       }
     };
 
-    const fetchLatestAnswer = async () => {
-      if (user) {
-        const data = await getAnswerFromSupabase(user);
-        if (data) {
-          setLatestUserAnswer({
-            answer_text: data.answer_text,
-            answer_answer: data.answer_answer,
-            answer_image: data.answer_image,
-          });
-        }
-      }
-    };
-
     if (searchInputRef.current) {
       searchInputRef.current.focus();
     }
 
     checkUser();
-    fetchLatestAnswer();
-  }, [router, user, answer]);
+  }, [router]);
 
   const handleQuestionChange = (e: ChangeEvent<HTMLInputElement>) => {
     setQuestion(e.target.value);
@@ -152,6 +140,12 @@ const MainSearchBar = () => {
       if (error) {
         console.error("데이터 저장 실패:", error);
       }
+
+      setLatestUserAnswer({
+        answer_text: question,
+        answer_answer: data,
+        answer_image: imageUrl,
+      });
     } catch (error) {
       console.error("오류 발생:", error);
       setAnswer("죄송합니다. 답변을 생성하는 중 오류가 발생했습니다.");
