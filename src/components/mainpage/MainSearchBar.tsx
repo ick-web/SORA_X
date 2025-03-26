@@ -45,7 +45,7 @@ const MainSearchBar = () => {
       } else {
         setUser(data.user);
       }
-    }; //유저 로그인 여부를 확인하는 부분 추후의 대체 예정
+    }; //유저 로그인 여부를 확인하는 부분 추후에 대체 예정
 
     const fetchLatestAnswer = async () => {
       if (user) {
@@ -133,7 +133,7 @@ const MainSearchBar = () => {
       resetForm();
 
       if (data === NO_ANSWER) {
-        return; //답변을 생서하지 못하거나 문제를 인식하지 못한경우 함수를 종료 & answer로 비교할시 비동기 처리 문제 때문에 원하는결과를 얻지 못할수도있음
+        return; //답변을 생성하지 못하거나 문제를 인식하지 못한경우 함수를 종료 & answer로 비교할시 비동기 처리 문제 때문에 원하는결과를 얻지 못할수도있음
       }
 
       const { error } = await supabase.from("answers").insert({
