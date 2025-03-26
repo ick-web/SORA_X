@@ -7,7 +7,7 @@ const CommentRank = ({ commentUsers }: { commentUsers: CommentUsersResponse[] | 
   const commentCount = (commentUsers ?? []).map((user) => user.answer_count);
 
   return (
-    <ul className="space-y-8">
+    <ul className="space-y-5">
       {RANKING_COUNT.map((count, i) => {
         return (
           <li key={count} className="flex flex-row gap-8 w-full">
