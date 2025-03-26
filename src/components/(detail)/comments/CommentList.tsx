@@ -27,7 +27,7 @@ const CommentList = ({ answerId }: { answerId: string }) => {
   // 댓글 가져오기
   const {
     data: comments = [],
-    isLoading,
+    isPending,
     isError,
   } = useQuery({
     queryKey: ["comments", answerId],
@@ -85,7 +85,7 @@ const CommentList = ({ answerId }: { answerId: string }) => {
     }
   }, [editCommentId, comments]);
 
-  if (isLoading) return <p>댓글을 불러오는 중...</p>;
+  if (isPending) return <p>댓글을 불러오는 중...</p>;
   if (isError) return <p>댓글을 불러오는 중 오류가 발생했습니다.</p>;
 
   return (
