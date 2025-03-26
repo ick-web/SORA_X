@@ -19,7 +19,11 @@ const nextConfig = {
         hostname: "rxwsgcailvsrbefcdnyv.supabase.co",
         port: "",
         pathname: "**",
+<<<<<<< HEAD
       }
+=======
+      },
+>>>>>>> 7e67696df5dd68507a4099ff0b483738ad14ae2a
     ],
   },
 };

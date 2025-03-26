@@ -19,7 +19,7 @@ const QuestionRank = ({ questionUsers }: { questionUsers: QuestionUsersResponse[
               {questionCount[i] ? `${count} 등` : ""}
             </p>
             <p className="w-56 text-xl mr-96">{userNickname[i]}</p>
-            <p className="w-10 text-xl">{questionCount[i] ? `${questionCount[i]}회` : ""}</p>
+            <p className="w-16 text-xl">{questionCount[i] ? `${questionCount[i]}회` : ""}</p>
           </li>
         );
       })}
