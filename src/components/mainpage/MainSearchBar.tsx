@@ -213,7 +213,7 @@ const MainSearchBar = () => {
       <MainAnswer
         isLoading={isLoading}
         answer={answer || latestUserAnswer?.answer_answer || ""}
-        question={question || latestUserAnswer?.answer_text || ""}
+        question={latestUserAnswer?.answer_text || ""}
         imageUrl={latestUserAnswer?.answer_image || undefined}
       />
 
@@ -226,4 +226,3 @@ const MainSearchBar = () => {
 };
 
 export default MainSearchBar;
-
