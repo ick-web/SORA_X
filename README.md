@@ -24,15 +24,17 @@
 ## 프로젝트 미리보기👑
 
 - SoraX </br></br>
-  <img width="700" alt="Image" src="https://이미지주소.png" />
-- 상세페이지 </br></br>
-  <img width="700" alt="Image" src="https://이미지주소.png" />
+  <img src='https://ifh.cc/g/jqRYsc.jpg' width="700" alt="Image">
+- 마이페이지 </br></br>
+  <img src='https://ifh.cc/g/KR0vtX.jpg' width="700" alt="Image">
 - 회원가입 / 로그인 </br></br>
-  <img width="700" alt="Image" src="https://이미지주소.png" />
+  <img src='https://ifh.cc/g/Zq7W21.jpg' width="700" alt="Image">
 - 커뮤니티 보드 </br></br>
-  <img width="700" alt="Image" src="https://이미지주소.png" />
-- 주소 검색으로 게시글 작성 </br></br>
-  <img width="700" alt="Image" src="https://이미지주소.png" />
+  <img src='https://ifh.cc/g/GnCPVR.jpg' width="700" alt="Image">
+- 랭킹 페이지 </br></br>
+  <img src='https://ifh.cc/g/WZTJ41.jpg' width="700" alt="Image">
+- 상세 페이지 </br></br>
+  <img src='https://ifh.cc/g/CHWSh4.jpg' width="700" alt="Image" >
 
 <br><br>
 
@@ -42,9 +44,8 @@
 
 ### 🗺️ SoraX - 한줄소개
 
-소개내용</br>
-소개내용</br>
-소개내용</br>
+OpenAI의 강력한 언어 모델을 활용하여 다양한 수학 문제를 쉽고 빠르게 해결하는 AI 서비스입니다.</br>
+수포자가 많이 발생하는 요즘, 이들을 위한 구원자 등장!</br>
 
 소개내용<br>
 
@@ -55,16 +56,16 @@
 ### 🚀 SoraX 가 제공하는 주요 기능</br>
 
 **기능1** </br>
-✅ 기능소개</br>
-✅ 기능소개</br>
+✅ 텍스트와 이미지를 기반으로 모든 수학 문제를 해결 가능</br>
+✅ 마법의 소라고둥님에게 질문하면 모든 고민 해결 가능</br>
 
 **기능2** </br>
-✅ 기능소개</br>
-✅ 기능소개</br>
+✅ 마이페이지에서 이전에 질문했던 내역들을 다시 봄으로서 복습 기회 제공</br>
+✅ 질문의 광장 페이지에서 다른 유저들이 겪는 어려운 문제를 확인하고 정보 공유 가능</br>
 
 **기능3** </br>
-✅ 기능소개</br>
-✅ 기능소개</br>
+✅ 본인이 얼마나 열심히 공부했는지를 랭킹 페이지에서 확인 가능</br>
+✅ 상세페이지에서 유저들과 직접적으로 소통함으로서 ai가 제공해주지 못하는 커뮤니티력을 상승</br>
 
 </br>
 
@@ -99,11 +100,11 @@
 
 | 팀원   | 담당파트                                                      | GitHub                                       | 블로그                                              |
 | ------ | ------------------------------------------------------------- | -------------------------------------------- | --------------------------------------------------- |
-| 오원택 | 담당 페이지를 적어주세요                                      | [원택 Github](https://github.com/dhdnjs0702) | [원택 블로그](https://ihatecoding3636.tistory.com/) |
-| 김종연 | 랭킹(학습 랭크) 페이지                                       | [종연 Github](https://github.com/kjjyyy01)   | [종연 블로그](https://velog.io/@kjjyyy01/posts)     |
+| 오원택 | 메인(ai 질문) 페이지                                      | [원택 Github](https://github.com/dhdnjs0702) | [원택 블로그](https://ihatecoding3636.tistory.com/) |
+| 김종연 | 랭킹(학습 랭크) 페이지                                        | [종연 Github](https://github.com/kjjyyy01)   | [종연 블로그](https://velog.io/@kjjyyy01/posts)     |
 | 유익환 | 로그인, 회원가입 페이지                                       | [익환 Github](https://github.com/ick-web/)   | [익환 블로그](https://devyu0001.tistory.com/)       |
 | 유선영 | 담당 페이지를 적어주세요                                      | [선영 Github](https://github.com/usuny0317)  | [선영 블로그](https://velog.io/@usuny0317/posts)    |
-| 김시헌 | 질문 & 풀이 상세 페이지, 댓글 CRUD 담당                        | [시헌 Github](https://github.com/shoney02)   | [시헌 블로그](https://velog.io/@shoney02/posts)     |
+| 김시헌 | 질문 & 풀이 상세 페이지, 댓글 CRUD 담당                       | [시헌 Github](https://github.com/shoney02)   | [시헌 블로그](https://velog.io/@shoney02/posts)     |
 | 김도현 | Navigation Header, 질문의 광장 페이지, 소라멤버스 페이지 담당 | [도현 Github](https://github.com/woodie2933) | [도현 블로그](https://velog.io/@doni_kim/posts)     |
 
 <br />
