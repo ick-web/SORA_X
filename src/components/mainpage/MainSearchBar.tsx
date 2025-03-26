@@ -56,9 +56,7 @@ const MainSearchBar = () => {
     }
 
     checkUser();
-
   }, [router]);
-
 
   const handleQuestionChange = (e: ChangeEvent<HTMLInputElement>) => {
     setQuestion(e.target.value);
@@ -89,6 +87,12 @@ const MainSearchBar = () => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (user) {
+      AlertError("로그인 후 이용가능한 서비스 입니다");
+      router.push("/login");
+      return;
+    }
+
     if (!question.trim() && !previewUrl) return;
 
     setIsLoading(true);
