@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import Link from "next/link";
 import supabase from "@/app/supabase/client";
@@ -14,7 +14,7 @@ interface LoginFormData {
 
 const LoginForm = () => {
   const router = useRouter();
-  const { setUser } = useAuthStore();
+  const { user, setUser } = useAuthStore();
   const [error, setError] = useState<string | null>(null); //서버 오류 저장
 
   const {
@@ -26,7 +26,7 @@ const LoginForm = () => {
   const onSubmit: SubmitHandler<LoginFormData> = async (data) => {
     const { email, password } = data;
 
-    const { data: userData,error } = await supabase.auth.signInWithPassword({
+    const { data: userData, error } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
@@ -34,13 +34,22 @@ const LoginForm = () => {
     if (error) {
       setError(error.message);
     } else {
-      if(userData?.user){
-        setUser(userData.user) // Zustand 상태 업데이트
+      if (userData?.user) {
+        setUser(userData.user); // Zustand 상태 업데이트
       }
 
       router.push("/"); // 로그인 성공 시 홈 이동
+      return;
     }
   };
+  
+  // 로그인 상태일때 로그인페이지로 가는 걸 막는 로직
+  useEffect(() => {
+    if (user) {
+      alert("잘못된 접근입니다.");
+      router.push("/");
+    }
+  }, []);
 
   return (
     <div className="w-[400px] bg-neutral-800 text-white p-8 rounded-lg shadow-lg">
