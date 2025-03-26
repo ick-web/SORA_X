@@ -32,14 +32,7 @@ const Mycard = (answer: Answer) => {
 
   return (
     <div className="border border-color-black2 m-2 rounded-xl">
-      <Link
-        href={{
-          pathname: "/detail",
-          query: {
-            answer_id: answer.answer_id,
-          },
-        }}
-      >
+      <Link href={`/detail/${answer.answer_id}`}>
         <div className="flex flex-row mx-10 my-3 justify-center text-center">
           <div className="flex-1 m-1">
             <div className="text-xl font-bold line-clamp-1 ">
