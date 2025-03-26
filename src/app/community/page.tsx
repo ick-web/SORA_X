@@ -5,6 +5,7 @@ import supabase from "../supabase/client";
 import { Answer } from "@/types/mainTypes";
 import { IoIosArrowForward } from "react-icons/io";
 import Link from "next/link";
+import Image from "next/image";
 
 const CommunityPage = () => {
   const [answers, setAnswers] = useState<Answer[]>([]);
@@ -35,10 +36,7 @@ const CommunityPage = () => {
         <h1 className="text-3xl font-bold mb-8">질문의 광장</h1>
         <div className="bg-color-black2 rounded-xl w-full h-16 flex justify-start items-center px-8 mb-8">
           <h2 className="text-lg">
-            <span className="text-color-orange2">
-              다른 이용자들의 질문과 답변
-            </span>
-            을 확인하고, 함께 공부해 보세요!
+            <span className="text-color-orange2">다른 이용자들의 질문과 답변</span>을 확인하고, 함께 공부해 보세요!
           </h2>
         </div>
 
@@ -52,29 +50,25 @@ const CommunityPage = () => {
                   <span className="text-md text-color-orange2 font-semibold">
                     🧩 {item.user?.user_nickname ?? "익명"}
                   </span>
-                  <span className="text-sm text-color-black4">
-                    {new Date(item.answer_created_at).toLocaleString()}
-                  </span>
+                  <span className="text-sm text-color-black4">{new Date(item.answer_created_at).toLocaleString()}</span>
                 </div>
                 <div className="w-full h-56 flex justify-between">
                   <div className="w-8/12 flex flex-col">
                     {/* 질문 */}
-                    <h2 className="text-md text-white font-semibold mb-2">
-                      {item.answer_text}
-                    </h2>
+                    <h2 className="text-md text-white font-semibold mb-2">{item.answer_text}</h2>
                     {/* 답변 */}
-                    <p className="w-full line-clamp-2 text-color-black4">
-                      {item.answer_answer}
-                    </p>
+                    <p className="w-full line-clamp-2 text-color-black4">{item.answer_answer}</p>
                   </div>
                   {/* 질문 이미지 (null 가능) */}
                   <div className="w-3/12 flex justify-center items-center ml-4">
                     {item.answer_image && (
                       <div className="border rounded-lg w-48 h-28 flex justify-center items-center">
-                        <img
+                        <Image
                           src={item.answer_image}
                           alt="질문 이미지"
                           className="w-full h-full object-contain"
+                          width={60}
+                          height={50}
                         />
                       </div>
                     )}
