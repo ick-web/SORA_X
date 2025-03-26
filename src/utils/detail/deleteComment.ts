@@ -10,7 +10,8 @@ export const deleteComment = async (commentId: string) => {
     if (error) throw error;
 
     return true;
-  } catch (_error) {
+  } catch (error) {
+    console.error("댓글 삭제 실패:", error);
     return false;
   }
 };

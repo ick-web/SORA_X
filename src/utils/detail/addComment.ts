@@ -23,7 +23,8 @@ export const addComment = async (
     }
 
     return data ? data[0] : null;
-  } catch (_error) {
+  } catch (error) {
+    console.error(error);
     return null;
   }
 };

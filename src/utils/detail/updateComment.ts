@@ -10,7 +10,8 @@ export const updateComment = async (commentId: string, newContent: string) => {
     if (error) throw error;
 
     return true;
-  } catch (_error) {
+  } catch (error) {
+    console.error("댓글 수정 실패:", error);
     return false;
   }
 };
