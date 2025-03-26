@@ -10,6 +10,7 @@
 ✅ 커뮤니티(질문의 광장) – 사용자의 전체 질의응답 데이터를 한곳에서!<br>
 ✅ 랭킹(학습 랭크) 페이지 - 사용자가 질문을 얼마나 많이했는지, 댓글을 얼마나 많이 남겼는지에 따라 순위를 보여줍니다!</br>
 ✅ 문제 풀이 상세 페이지 - 사용자의 질문과 풀이 내용을 확인할 수 있고, 댓글로 소통도 가능합니다!<br>
+✅ 마이페이지 - 사용자의 모든 동작을 볼 수 있습니다! 닉네임 수정은 물론 작성한 게시글과 댓글을 모아보며 클릭하여 자세히 보고 삭제를 진행하세요~! <br />
 
 <br>
 
@@ -98,18 +99,21 @@ OpenAI의 강력한 언어 모델을 활용하여 다양한 수학 문제를 쉽
 
 ## 팀 구성🫂
 
-| 팀원   | 담당파트                                                      | GitHub                                       | 블로그                                              |
-| ------ | ------------------------------------------------------------- | -------------------------------------------- | --------------------------------------------------- |
-| 오원택 | 메인(ai 질문) 페이지                                      | [원택 Github](https://github.com/dhdnjs0702) | [원택 블로그](https://ihatecoding3636.tistory.com/) |
-| 김종연 | 랭킹(학습 랭크) 페이지                                        | [종연 Github](https://github.com/kjjyyy01)   | [종연 블로그](https://velog.io/@kjjyyy01/posts)     |
+
+| 팀원   | 담당파트                                                                          | GitHub                                       | 블로그                                              |
+| ------ | --------------------------------------------------------------------------------- | -------------------------------------------- | --------------------------------------------------- |
+| 오원택 | 메인(ai 질문) 페이지                                                            | [원택 Github](https://github.com/dhdnjs0702) | [원택 블로그](https://ihatecoding3636.tistory.com/) |
+| 김종연 | 랭킹(학습 랭크) 페이지                                                            | [종연 Github](https://github.com/kjjyyy01)   | [종연 블로그](https://velog.io/@kjjyyy01/posts)     |
 | 유익환 | 로그인, 회원가입 페이지                                       | [익환 Github](https://github.com/ick-web/)   | [익환 블로그](https://devyu0001.tistory.com/)       |
-| 유선영 | 담당 페이지를 적어주세요                                      | [선영 Github](https://github.com/usuny0317)  | [선영 블로그](https://velog.io/@usuny0317/posts)    |
-| 김시헌 | 질문 & 풀이 상세 페이지, 댓글 CRUD 담당                       | [시헌 Github](https://github.com/shoney02)   | [시헌 블로그](https://velog.io/@shoney02/posts)     |
-| 김도현 | Navigation Header, 질문의 광장 페이지, 소라멤버스 페이지 담당 | [도현 Github](https://github.com/woodie2933) | [도현 블로그](https://velog.io/@doni_kim/posts)     |
+| 유선영 | 마이페이지 닉네임 수정, 유저의 게시글 & 댓글 모아보기 및 삭제, 탭 제공, 쿼리 작성 | [선영 Github](https://github.com/usuny0317)  | [선영 블로그](https://velog.io/@usuny0317/posts)    |
+| 김시헌 | 질문 & 풀이 상세 페이지, 댓글 CRUD 담당                                           | [시헌 Github](https://github.com/shoney02)   | [시헌 블로그](https://velog.io/@shoney02/posts)     |
+| 김도현 | Navigation Header, 질문의 광장 페이지, 소라멤버스 페이지 담당                     | [도현 Github](https://github.com/woodie2933) | [도현 블로그](https://velog.io/@doni_kim/posts)     |
+
 
 <br />
 
 ## 트러블 슈팅 & 작업 후기🧑‍💻
 
+- [트러블 슈팅 #1](https://velog.io/@usuny0317/%EC%8B%AC%ED%99%94%EC%A3%BC%EC%B0%A8-%ED%8A%B8%EB%9F%AC%EB%B8%94%EC%8A%88%ED%8C%85)
 - [트러블 슈팅 #1](혹시 작성하신분,,,url좀,,,)
 - [트러블 슈팅 #2](혹시 작성하신,,,분,,,,,)
