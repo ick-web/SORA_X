@@ -56,7 +56,9 @@ const MainSearchBar = () => {
     }
 
     checkUser();
+
   }, [router]);
+
 
   const handleQuestionChange = (e: ChangeEvent<HTMLInputElement>) => {
     setQuestion(e.target.value);

@@ -1,4 +1,4 @@
-export interface Comment {
+export type Comment = {
   comment_id: string;
   comment_user_id: string;
   comment_content: string;
@@ -7,4 +7,10 @@ export interface Comment {
   users: {
     user_nickname: string;
   };
-}
+};
+
+// 댓글 추가하기 위해 정의
+export type newComment = Pick<
+  Comment,
+  "comment_answer_id" | "comment_user_id" | "comment_content"
+>;
