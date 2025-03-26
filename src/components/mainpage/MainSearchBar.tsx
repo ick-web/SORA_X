@@ -66,7 +66,7 @@ const MainSearchBar = () => {
 
     checkUser();
     fetchLatestAnswer();
-  }, [answer]);
+  }, [user, answer]);
 
   const handleQuestionChange = (e: ChangeEvent<HTMLInputElement>) => {
     setQuestion(e.target.value);
@@ -208,7 +208,7 @@ const MainSearchBar = () => {
       <MainAnswer
         isLoading={isLoading}
         answer={answer || latestUserAnswer?.answer_answer || ""}
-        question={question || latestUserAnswer?.answer_text || ""}
+        question={latestUserAnswer?.answer_text || ""}
         imageUrl={latestUserAnswer?.answer_image || undefined}
       />
 
