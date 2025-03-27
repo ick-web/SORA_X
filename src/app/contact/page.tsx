@@ -86,7 +86,6 @@ const ContactPage = () => {
   return (
     <div className="wrapper w-full h-screen flex flex-col justify-center items-center overflow-hidden">
       <div className="rounded-3xl w-full h-full flex justify-center items-center bg-color-black1 m-3">
-        {/* 슬라이더 컨테이너 */}
         <div className="w-1/2 h-4/6 flex flex-col relative overflow-hidden -mt-20">
           <div
             className="absolute top-0 left-0 w-full h-full transition-transform duration-500"
@@ -135,7 +134,6 @@ const ContactPage = () => {
               </div>
             ))}
           </div>
-          {/* Prev/Next 버튼 */}
           <div className="w-full absolute bottom-7 left-1/2 transform -translate-x-1/2 flex justify-center gap-4">
             <button onClick={handlePrev}>
               <IoIosArrowDropleftCircle className="text-4xl transition-all duration-300 hover:text-color-orange2" />
