@@ -32,14 +32,14 @@ const ToggleLogIn = () => {
       {user === null ? (
         <button
           onClick={handleLogIn}
-          className="w-56 bg-orange-500 hover:bg-orange-600 text-white px-4 py-3 rounded-lg"
+          className="w-56 bg-orange-500 hover:bg-color-black3 hover:text-color-orange1 font-medium text-white px-4 py-3 rounded-lg transition-all duration-300"
         >
           로그인
         </button>
       ) : (
         <button
           onClick={handleLogout}
-          className="w-56 bg-orange-500 hover:bg-orange-600 text-white px-4 py-3 rounded-lg"
+          className="w-56 bg-orange-500 hover:bg-color-black3 hover:text-color-orange1 font-medium text-white px-4 py-3 rounded-lg transition-all duration-300"
         >
           로그아웃
         </button>

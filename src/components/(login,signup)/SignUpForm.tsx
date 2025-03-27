@@ -42,8 +42,8 @@ const SignupForm = () => {
   };
 
   return (
-    <div className="w-[400px] bg-neutral-800 text-white p-8 rounded-lg shadow-lg">
-      <h3 className="text-2xl font-bold text-center mb-6">회원가입</h3>
+    <div className="w-[450px] h-4/6 bg-neutral-800 text-white py-12 px-10 rounded-2xl">
+      <h3 className="text-2xl font-bold text-center mb-8">회원가입</h3>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         {/* 이메일 입력 */}
@@ -88,7 +88,7 @@ const SignupForm = () => {
           <input
             type="text"
             {...register("nickname", { required: "닉네임을 입력해주세요" })}
-            className="w-full p-3 bg-zinc-600 text-white border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+            className="w-full p-3 bg-zinc-600 text-white border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 mb-4"
             placeholder="닉네임을 입력해주세요"
           />
           {errors.nickname && (
@@ -114,7 +114,7 @@ const SignupForm = () => {
         <p className="text-gray-400 text-sm">
           이미 가입했어요!
           <Link href="/login">
-            <button className="ml-2 bg-orange-500 text-white py-1 px-3 rounded-lg text-sm hover:bg-orange-600">
+            <button className="ml-2 border border-color-orange1 text-color-orange1 py-2 px-3 rounded-full font-medium text-sm transition-all duration-300 hover:bg-color-orange2 hover:text-white mt-2">
               로그인
             </button>
           </Link>
