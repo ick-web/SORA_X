@@ -31,7 +31,8 @@ const memberCards = [
     address: "GitHub",
     github: "https://github.com/kjjyyy01",
     line: "INTRODUCTION",
-    intro: "리마인더 김종연입니다.",
+    intro: "스트레칭 하고 분반수업 가시죠.",
+    intro2: "리마인더 김종연입니다.",
   },
   {
     name: "shoney(김시헌)",
@@ -39,7 +40,8 @@ const memberCards = [
     address: "GitHub",
     github: "https://github.com/shoney02",
     line: "INTRODUCTION",
-    intro: "솔루션 마법사 김시헌입니다.",
+    intro: "웨웅~",
+    intro2: "솔루션 마법사 김시헌입니다.",
   },
   {
     name: "SunTea(유선영)",
@@ -47,7 +49,8 @@ const memberCards = [
     address: "GitHub",
     github: "https://github.com/usuny0317",
     line: "INTRODUCTION",
-    intro: "쿼리와 캐싱에 미치다, 유선영입니다.",
+    intro: "쿼리와 캐싱에 미치다.",
+    intro2: "천재토끼 유선영입니다.",
   },
   {
     name: "U(유익환)",
@@ -55,7 +58,8 @@ const memberCards = [
     address: "GitHub",
     github: "https://github.com/ick-web/",
     line: "INTRODUCTION",
-    intro: "물음표 살인마 유익환입니다.",
+    intro: "나는요 발표가 좋은걸",
+    intro2: "물음표 살인마 유익환입니다.",
   },
   {
     name: "DONI",
@@ -63,7 +67,8 @@ const memberCards = [
     address: "GitHub",
     github: "https://github.com/woodie2933",
     line: "INTRODUCTION",
-    intro: "나이트 크롤러 김도현입니다.",
+    intro: "오늘은 9시에 잘거임",
+    intro2: "나이트 크롤러 김도현입니다.",
   },
 ];
 
