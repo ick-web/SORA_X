@@ -5,7 +5,7 @@ export const fetchAnswerById = async (answerId: string) => {
     const { data, error } = await supabase
       .from("answers")
       .select("*")
-      .eq("answer_id", answerId) // 임시로 answer_id 넣었습니다.
+      .eq("answer_id", answerId)
       .single();
 
     if (error) throw error;

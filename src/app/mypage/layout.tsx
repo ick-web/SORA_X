@@ -9,12 +9,11 @@ import { AlertSuccess, AlertError, AlertInfo } from "@/utils/alert";
 import { useQueryClient } from "@tanstack/react-query";
 
 const Layout = ({ children }: { children: ReactNode }) => {
-  //수정state
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [newNickName, setNewNickName] = useState<string>("");
   const [canChange, setCanChange] = useState<boolean>(false);
   const queryClient = useQueryClient();
-  //유저 정보 state
+
   const [usernickname, setNickname] = useState<string>("");
 
   const {
@@ -40,7 +39,6 @@ const Layout = ({ children }: { children: ReactNode }) => {
   if (isUserPending) return <p>유저 정보 로딩 중...</p>;
   if (isUserError || !userid) return <p>유저 정보를 불러오는 중 오류 발생</p>;
 
-  //중복확인
   const checkNickname = async () => {
     if (newNickName === "") {
       AlertInfo("안내", "닉네임을 입력해주세요!");
@@ -64,7 +62,6 @@ const Layout = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  //수정하기
   const changeNickname = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (canChange) {

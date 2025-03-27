@@ -11,7 +11,7 @@ const Mycomments = () => {
   } = useUserData();
 
   const { data, isPending, isError } = useCommentData(userid, {
-    enabled: !!userid, // userid가 존재할 때만 실행됨
+    enabled: !!userid,
   });
 
   if (isUserPending) return <p>유저 정보 로딩 중...</p>;

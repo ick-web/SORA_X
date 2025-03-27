@@ -1,5 +1,3 @@
-//pr생성용 주석추가
-
 import { PERSONA } from "@/constants/mainpage/cardComment";
 import { RequestData } from "@/types/mainTypes";
 import { NextRequest, NextResponse } from "next/server";
@@ -17,7 +15,7 @@ const openai = new OpenAI({
 export const POST = async (req: NextRequest): Promise<NextResponse> => {
   const { question, image_url }: RequestData = await req.json();
 
-  const systemPrompt = PERSONA; // 페르소나 부여
+  const systemPrompt = PERSONA;
 
   try {
     const userMessageContent: MessageContent[] = [

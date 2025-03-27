@@ -15,7 +15,6 @@ export type User = {
 export type Answer = {
   answer_id: string;
   answer_created_at: string;
-  // image = null 일 수 있음
   answer_image?: string;
   answer_text: string;
   answer_answer: string;

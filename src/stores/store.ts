@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { User } from "@supabase/supabase-js"; // Supabase 유저 타입
+import { User } from "@supabase/supabase-js";
 
 interface AuthState {
   user: User | null;
@@ -16,7 +16,7 @@ export const useAuthStore = create<AuthState>()(
       logout: () => set({ user: null }),
     }),
     {
-      name: "auth-storage", // localStorage에 저장될 키 이름
+      name: "auth-storage",
     }
   )
 );
