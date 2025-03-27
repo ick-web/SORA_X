@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import supabase from "@/app/supabase/client";
+import { useAuthStore } from "@/stores/store";
 
 interface SignupData {
   email: string;
@@ -14,6 +15,7 @@ interface SignupData {
 
 const SignupForm = () => {
   const router = useRouter();
+  const { setUser } = useAuthStore();
   const [error, setError] = useState<string | null>(null); //서버 오류 저장
 
   const {
@@ -25,7 +27,7 @@ const SignupForm = () => {
   const onSubmit = async (data: SignupData) => {
     const { email, password, nickname } = data;
 
-    const { error } = await supabase.auth.signUp({
+    const { data: signUpData, error } = await supabase.auth.signUp({
       email,
       password,
       options: { data: { user_nickname: nickname } },
@@ -34,7 +36,8 @@ const SignupForm = () => {
     if (error) {
       setError(error.message);
     } else {
-      router.push("/login"); // 회원가입 성공 시 로그인 페이지 이동
+      setUser(signUpData.user);
+      router.push("/"); // 회원가입 성공 시 홈페이지로 이동동
     }
   };
 
