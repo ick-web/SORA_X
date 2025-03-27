@@ -20,8 +20,8 @@ const RankingHeader = () => {
         layoutId="underline"
         initial={false}
         animate={{
-          width: pathname === "/ranking" ? "80px" : "80px", // 탭 크기 조절
-          x: pathname === "/ranking" ? "0%" : "118%", // 왼쪽 <-->오른쪽 이동
+          width: pathname === "/ranking" ? "80px" : "80px",
+          x: pathname === "/ranking" ? "0%" : "118%",
         }}
         transition={{ type: "spring", stiffness: 300, damping: 30 }}
       />

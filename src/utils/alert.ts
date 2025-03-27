@@ -9,8 +9,8 @@ export const AlertSuccess = (
     title,
     text,
     customClass: {
-      popup: "swal-custom", // 팝업 스타일링
-      icon: "swal-icon", // 아이콘 스타일링
+      popup: "swal-custom",
+      icon: "swal-icon",
     },
   });
 };

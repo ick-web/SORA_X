@@ -65,7 +65,6 @@ const Header = () => {
               </div>
             </nav>
           </div>
-          {/* 로그인 버튼 */}
           <div className="flex justify-center items-center">
             <ToggleLogIn />
           </div>
