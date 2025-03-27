@@ -35,18 +35,18 @@ const CommentInput = ({
     const newComment = await addComment(answerId, userId, comment);
 
     if (newComment) {
-      AlertSuccess("성공", "댓글이 등록되었습니다!")
+      AlertSuccess("성공", "댓글이 등록되었습니다!");
       onAddComment(newComment);
       setComment("");
     } else {
-      AlertError("실패", "댓글 등록에 실패했습니다.")
+      AlertError("실패", "댓글 등록에 실패했습니다.");
     }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     handleAddComment();
-  }
+  };
 
   return (
     <form onSubmit={handleSubmit} className="mt-4 flex items-center">
@@ -58,7 +58,7 @@ const CommentInput = ({
       />
       <button
         type="submit"
-        className="w-20 ml-2 px-4 py-2 bg-color-orange1 rounded duration-300 hover:bg-color-orange2"
+        className="w-20 ml-2 px-4 py-2 bg-color-orange1 rounded duration-300 text-md hover:bg-white hover:text-color-black1"
       >
         등록
       </button>
