@@ -9,7 +9,6 @@ export type Comment = {
   };
 };
 
-// 댓글 추가하기 위해 정의
 export type newComment = Pick<
   Comment,
   "comment_answer_id" | "comment_user_id" | "comment_content"
